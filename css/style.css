@@ -5,6 +5,7 @@ body {
   align-items: center;
   justify-content: center;
   height: 50vmax;
+  margin-top: 150px;
 }
 
 .container {
@@ -43,6 +44,46 @@ body {
 }
 
 .row2 div {
+  margin: 5px;
+}
+
+.row3 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.row3 div {
+  margin: 5px;
+}
+
+.row4 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.row4 div {
+  margin: 5px;
+}
+
+.row5 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.row5 div {
+  margin: 5px;
+}
+
+.row6 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.row6 div {
   margin: 5px;
 }
 
