@@ -5,17 +5,19 @@ let waste = [] // array to hold the cards in the waste pile
 let pyramid = [] // array to hold the shuffled cards in the pyramid
 let cardOneVal // holds the value of the first card selected
 let cardTwoVal // holds the value of the second card selected
+let cardOneEl
+let cardTwoEl
 let cardSum // holds the sum of card 1 and card 2 to check if it equals 13
 let winner // if the board is clear, winner = true
 let noMoreMoves // if we've gone through the stock deck 3 times, noMoreMoves = true, game is over
-let cardTurn = 1 // if this equals 1, then a click picks the first card, if it equals -1, a click picks the second card
+let cardTurn // if this equals 1, then a click picks the first card, if it equals -1, a click picks the second card
 let cardToRemove
 
 // Cached element references
 
-let stockEl = document.getElementById('stock')
-let wasteEl = document.getElementById('waste')
-let card = document.getElementById('pyramid')
+let stockEl = document.getElementById('stock') //variable to access the stock pile
+let wasteEl = document.getElementById('waste') //variable to access the waste pile
+let card = document.getElementById('pyramid') //variable to click a card in the pyramid
 
       // Cached Elements for Each Card in the Pyramid
 let card0El = document.getElementById('p0')
@@ -49,8 +51,8 @@ let card27El = document.getElementById('p27')
 
 // Event listeners
 
-document.getElementById('flipBtn').addEventListener('click', handleClick)
-card.addEventListener('click', turn)
+document.getElementById('flipBtn').addEventListener('click', handleClick) // event listener for Flip button
+card.addEventListener('click', turn) // event listener to call the turn() function, which calls the handleClick functions
 
 // Functions
 
@@ -59,6 +61,7 @@ init()
 function init() {
   winner = false
   noMoreMoves = false
+  cardTurn = 1
   // Initialize stock with array of 52 cards 
   stock = ["dA","dQ","dK","dJ","d10","d09","d08","d07","d06","d05","d04","d03","d02","hA","hQ","hK","hJ","h10","h09","h08","h07","h06","h05","h04","h03","h02","cA","cQ","cK","cJ","c10","c09","c08","c07","c06","c05","c04","c03","c02","sA","sQ","sK","sJ","s10","s09","s08","s07","s06","s05","s04","s03","s02"]
   pyramidRender()
@@ -136,12 +139,15 @@ function pyramidRender() {
 
 function turn(evt) {          //Switches turns between choosing the first card and second card
   if (cardTurn === 1) {
-    handleClickOne(evt)
+    cardOneEl = evt.target
     cardTurn = -1
+    handleClickOne(evt)
   } else if (cardTurn === -1) {
-    handleClickTwo(evt)
+    cardTwoEl = evt.target
     cardTurn = 1
+    handleClickTwo(evt)
   } else return
+  checkForWinner(cardOneVal, cardTwoVal)
 }
 
 // Function to handle the Flip Card button click:
@@ -160,29 +166,33 @@ function handleClick() {
 }
 
 //Function to handle clicking on your first card
-
 function handleClickOne(evt) {
+  //sets cardIdx to the card type based on the class
   let cardIdx = evt.target.classList.value.substring(12)
+  //if else statements determining what numeric value to assign the card picked
   if (cardIdx === 'A') cardOneVal = 1 
   else if (cardIdx === '10') cardOneVal = 10
   else if (cardIdx === 'J') cardOneVal = 11
   else if (cardIdx === 'Q') cardOneVal = 12
-  else if (cardIdx === 'K') cardOneVal = 13
-  else if (parseInt(cardIdx, 10) < 10) {
+  //if the card is a King, run the isKing() function to clear that card and start over on 1st card choice
+  else if (cardIdx === 'K') {
+    isKing()
+  } else if (parseInt(cardIdx, 10) < 10) {
     let stringVal = evt.target.classList.value.substring(13)
     cardOneVal = parseInt(stringVal, 10)
   }
   else {
     return
   }
-  // return cardOneVal
-  console.log("1", cardOneVal)
+  console.log("1:", cardOneVal)
+  return cardOneVal
 }
 
 //Function to handle clicking on your second card
-
 function handleClickTwo(evt) {
+  //sets cardIdx to the card type based on the class
   let cardIdx = evt.target.classList.value.substring(12)
+  //if else statements determining what numeric value to assign the card picked
   if (cardIdx === 'A') cardTwoVal = 1 
   else if (cardIdx === '10') cardTwoVal = 10
   else if (cardIdx === 'J') cardTwoVal = 11
@@ -195,12 +205,11 @@ function handleClickTwo(evt) {
   else {
     return
   }
-  // return cardTwoVal
-  console.log("2", cardTwoVal)
+  console.log("2:", cardTwoVal)
+  return cardTwoVal
 }
 
 // Function to render deck state
-
 function render(cardPicked) {
 	// Remove outline class when first card is picked
   if (waste.length === 1) {
@@ -226,58 +235,24 @@ function render(cardPicked) {
   }
 }
 
-function checkForWinner() {
-
+// Function to clear a King card and go back to first card choice
+function isKing() {
+  cardTurn = 1
+  cardOneEl.classList = 'card small outline'
 }
 
-// Define the required variables to track the state of the game.
-  // cardOne: will store the value of the first card selected.
-  // cardTwo: will store the value of the second card selected.
-  // pyramid: where the values of the cards in the pyramid are stored (I’m not sure if it would be easier to have 7 different variables for the different rows)
-  // stockPile: will contain an array of the 24 shuffled cards not in the pyramid.
-  // wastePile: will be an empty array used to hold the cards moved from the stockPile array.
-  // cardSum: will store the sum of the values of the 2 cards selected, and compare to see if the sum is equal to 13.
-  // winner: set to false to start, but will equal true if the pyramid is cleared.
-  // noMoreMoves: set to false to start, but will equal true if the stock pile is looked through 3 times and there are still cards in the pyramid.
+// Function checks to see if cards add up to 13
+function checkForWinner(card1, card2) {
+  cardSum = card1 + card2
+if (cardSum === 13) {
+  clearCards()
+  } else {
+    return
+  }
+}
 
-// Store cached element references.
-  // cardDeckEl: store the 52 elements representing the playable cards on the screen.
-  // messageEl: store the element that displays the game’s status on the screen.
-  // resetBtnEl: reset button that reshuffles the cards and makes a new pyramid.
-
-// Create init() function that initializes the game, and call it when the app loads (similar to TTT).
-  // Set the winner and noMoreMoves variables to false.
-  // Set wastePile to an empty array.
-  // Call render() function.
-
-// Create render() function to set the board.
-  // Call shuffle() function that shuffles the cards.
-  // Call placePyramid() function that places 28 shuffled cards on the game board (in the pyramid variable) and the remaining 24 in the stockPile variable array.
-  //  Call updateMessage() function to show status of the game.
-
-// Create shuffle() function that shuffles the 52 cards (cardDeckEl) randomly each time it’s called.
-  // I plan on joining Ben’s optional lesson on CSS playing cards, and I’ve started doing research on how to make a shuffle function.
-
-// Create placePyramid() function that sets the board when it’s called.
-  // I need to do more research on this, this is one of the few things I’m not sure about for this game. I’m not sure what the best way to go about making this pyramid is.
-
-// Create updateMessage() function.
-  // There’s not a whole lot of messages to show. Just a winning message when the board is cleared, a count to let you know how many more times you have to look through the stock pile, a loser message.
-
-// Create handleClickOne() function.
-  // Stores the value of the first card that’s clicked, make a conditional that doesn’t allow you to click on a card that’s already selected or a card that is covered up.
-
-// Create handleClickTwo() function.
-  // Stores the value of the second card that’s clicked, make a conditional that doesn’t allow you to click on card one or on a card that is covered up.
-
-// Create isThirteen() function.
-// Has a conditional to see if the first card is a King (===13), and if so clear that card and re-choose a first card.
-// Make a conditional that takes the sum of both selected cards, and if it equals 13 then clear both cards. If not, then give a message saying those cards aren’t pairs and select a new first card.
-
-// Create checkForWinner() function.
-  // Check if there are any cards remaining in the pyramid, if there aren’t, set winner = true. If not, move on.
-  // Keep track of the amount of times we’ve gone through the stock pile. If we go through 3 times, set noMoreMoves = true.
-
-// Might need a function to move cards from the stock pile to the waste pile, and then back to the stock pile.
-
-// Create reset button that calls the init() function.
+// clearCards() function clears the cards if they add up to 13
+function clearCards() {
+  cardOneEl.classList = 'card small outline'
+  cardTwoEl.classList = 'card small outline'
+}
