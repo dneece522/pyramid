@@ -14,6 +14,40 @@ body {
   align-items: center;
 }
 
+/* PYRAMID STYLING BELOW */
+
+.row0 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.row0 div {
+  margin: 5px;
+}
+
+.row1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.row1 div {
+  margin: 5px;
+}
+
+.row2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.row2 div {
+  margin: 5px;
+}
+
+/* PYRAMID STYLING ABOVE */
+
 .card {
   margin: 3vh;
 }
