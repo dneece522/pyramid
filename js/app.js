@@ -5,7 +5,7 @@ let waste = [] // array to hold the cards in the waste pile
 let pyramid = [] // array to hold the shuffled cards in the pyramid
 let cardOneVal // holds the value of the first card selected
 let cardTwoVal // holds the value of the second card selected
-let cardSum 
+let cardSum // holds the sum of card 1 and card 2 to check if it equals 13
 let winner // if the board is clear, winner = true
 let noMoreMoves // if we've gone through the stock deck 3 times, noMoreMoves = true, game is over
 let cardToRemove
@@ -50,9 +50,8 @@ let card27El = document.getElementById('p27')
 // Event listeners
 
 document.getElementById('flipBtn').addEventListener('click', handleClick)
-//document.getElementById('rstStock').addEventListener('click')
-//document.getElementById('rstBtn').addEventListener('click')
 cardOne.addEventListener('click', handleClickOne)
+cardTwo.addEventListener('click', handleClickTwo)
 
 // Functions
 
@@ -67,6 +66,7 @@ function init() {
 }
 
 // Function to display shuffled cards on the pyramid
+
 function pyramidRender() {
   for (let i = 0; i < 28; i++) {
     // Assigns random index to randCard
@@ -135,6 +135,10 @@ function pyramidRender() {
   card27El.classList.remove('outline')
 }
 
+function eachTurn() {
+
+}
+
 // Function to handle the Flip Card button click:
 
 function handleClick() {
@@ -153,16 +157,39 @@ function handleClick() {
 //Function to handle clicking on your first card
 
 function handleClickOne(evt) {
-  if (evt.target.classList.value.substring(12) === 'A') cardOneVal = 1 
-  else if (evt.target.classList.value.substring(12) === '10') cardOneVal = 10
-  else if (evt.target.classList.value.substring(12) === 'J') cardOneVal = 11
-  else if (evt.target.classList.value.substring(12) === 'Q') cardOneVal = 12
-  else if (evt.target.classList.value.substring(12) === 'K') cardOneVal = 13
-  else {
+  let cardIdx = evt.target.classList.value.substring(12)
+  if (cardIdx === 'A') cardOneVal = 1 
+  else if (cardIdx === '10') cardOneVal = 10
+  else if (cardIdx === 'J') cardOneVal = 11
+  else if (cardIdx === 'Q') cardOneVal = 12
+  else if (cardIdx === 'K') cardOneVal = 13
+  else if (parseInt(cardIdx, 10) < 10) {
     let stringVal = evt.target.classList.value.substring(13)
     cardOneVal = parseInt(stringVal, 10)
   }
+  else {
+    return
+  }
   return cardOneVal
+}
+
+//Function to handle clicking on your second card
+
+function handleClickTwo(evt) {
+  let cardIdx = evt.target.classList.value.substring(12)
+  if (cardIdx === 'A') cardTwoVal = 1 
+  else if (cardIdx === '10') cardTwoVal = 10
+  else if (cardIdx === 'J') cardTwoVal = 11
+  else if (cardIdx === 'Q') cardTwoVal = 12
+  else if (cardIdx === 'K') cardTwoVal = 13
+  else if (parseInt(cardIdx, 10) < 10) {
+    let stringVal = evt.target.classList.value.substring(13)
+    cardTwoVal = parseInt(stringVal, 10)
+  }
+  else {
+    return
+  }
+  return cardTwoVal
 }
 
 // Function to render deck state
