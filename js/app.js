@@ -1,17 +1,21 @@
 // Declare deck variables
 
-let stock = []
-let waste = []
-let pyramid = []
-let cardSum
-let winner
-let noMoreMoves
+let stock = [] // array to hold the cards in the stock pile
+let waste = [] // array to hold the cards in the waste pile
+let pyramid = [] // array to hold the shuffled cards in the pyramid
+let cardOneVal
+let cardTwoVal
+let cardSum 
+let winner // if the board is clear, winner = true
+let noMoreMoves // if we've gone through the stock deck 3 times, noMoreMoves = true, game is over
 let cardToRemove
 
 // Cached element references
 
 let stockEl = document.getElementById('stock')
 let wasteEl = document.getElementById('waste')
+let cardOne = document.getElementById('pyramid')
+let cardTwo = document.getElementById('pyramid')
 
       // Cached Elements for Each Card in the Pyramid
 let card0El = document.getElementById('p0')
@@ -45,7 +49,10 @@ let card27El = document.getElementById('p27')
 
 // Event listeners
 
-document.getElementById('btn').addEventListener('click', handleClick)
+document.getElementById('flipBtn').addEventListener('click', handleClick)
+//document.getElementById('rstStock').addEventListener('click')
+//document.getElementById('rstBtn').addEventListener('click')
+cardOne.addEventListener('click', handleClickOne)
 
 // Functions
 
@@ -59,6 +66,7 @@ function init() {
   pyramidRender()
 }
 
+// Function to display shuffled cards on the pyramid
 function pyramidRender() {
   for (let i = 0; i < 28; i++) {
     // Assigns random index to randCard
@@ -127,7 +135,7 @@ function pyramidRender() {
   card27El.classList.remove('outline')
 }
 
-// Function to handle a button click:
+// Function to handle the Flip Card button click:
 
 function handleClick() {
   if (stock.length > 0) {
@@ -140,6 +148,24 @@ function handleClick() {
     // Pass card picked to render function to display
     render(cardPicked)
   }
+}
+
+function handleClickOne(evt) {
+  if (evt.target.classList.contains('sA' || 'cA' || 'hA' || 'dA')) cardOneVal = 1 
+  else if (evt.target.classList.contains('s02' || 'c02' || 'h02' || 'd02')) cardOneVal = 2
+  else if (evt.target.classList.contains('s03' || 'c03' || 'h03' || 'd03')) cardOneVal = 3
+  else if (evt.target.classList.contains('s04' || 'c04' || 'h04' || 'd04')) cardOneVal = 4
+  else if (evt.target.classList.contains('s05' || 'c05' || 'h05' || 'd05')) cardOneVal = 5
+  else if (evt.target.classList.contains('s06' || 'c06' || 'h06' || 'd06')) cardOneVal = 6
+  else if (evt.target.classList.contains('s07' || 'c07' || 'h07' || 'd07')) cardOneVal = 7
+  else if (evt.target.classList.contains('s08' || 'c08' || 'h08' || 'd08')) cardOneVal = 8
+  else if (evt.target.classList.contains('s09' || 'c09' || 'h09' || 'd09')) cardOneVal = 9
+  else if (evt.target.classList.contains('s10' || 'c10' || 'h10' || 'd10')) cardOneVal = 10
+  else if (evt.target.classList.contains('sJ' || 'cJ' || 'hJ' || 'dJ')) cardOneVal = 11
+  else if (evt.target.classList.contains('sQ' || 'cQ' || 'hQ' || 'dQ')) cardOneVal = 12
+  else if (evt.target.classList.contains('sK' || 'cK' || 'hK' || 'dK')) cardOneVal = 13
+
+  console.log(cardOneVal)
 }
 
 // Function to render deck state
@@ -158,7 +184,7 @@ function render(cardPicked) {
   // Add current card picked to deck 2 element
   wasteEl.classList.add(cardPicked)
 	// Adjust shadow when deck gets above/below halfway full
-  if (waste.length === 26) {
+  if (waste.length === 12) {
     wasteEl.classList.add('shadow')
     stockEl.classList.remove('shadow')
   }
@@ -168,6 +194,8 @@ function render(cardPicked) {
     stockEl.classList.remove('back-red')
   }
 }
+
+
 
 // Define the required variables to track the state of the game.
   // cardOne: will store the value of the first card selected.
