@@ -8,14 +8,14 @@ let cardTwoVal // holds the value of the second card selected
 let cardSum // holds the sum of card 1 and card 2 to check if it equals 13
 let winner // if the board is clear, winner = true
 let noMoreMoves // if we've gone through the stock deck 3 times, noMoreMoves = true, game is over
+let cardTurn = 1 // if this equals 1, then a click picks the first card, if it equals -1, a click picks the second card
 let cardToRemove
 
 // Cached element references
 
 let stockEl = document.getElementById('stock')
 let wasteEl = document.getElementById('waste')
-let cardOne = document.getElementById('pyramid')
-let cardTwo = document.getElementById('pyramid')
+let card = document.getElementById('pyramid')
 
       // Cached Elements for Each Card in the Pyramid
 let card0El = document.getElementById('p0')
@@ -50,8 +50,7 @@ let card27El = document.getElementById('p27')
 // Event listeners
 
 document.getElementById('flipBtn').addEventListener('click', handleClick)
-cardOne.addEventListener('click', handleClickOne)
-cardTwo.addEventListener('click', handleClickTwo)
+card.addEventListener('click', turn)
 
 // Functions
 
@@ -135,8 +134,14 @@ function pyramidRender() {
   card27El.classList.remove('outline')
 }
 
-function eachTurn() {
-
+function turn(evt) {          //Switches turns between choosing the first card and second card
+  if (cardTurn === 1) {
+    handleClickOne(evt)
+    cardTurn = -1
+  } else if (cardTurn === -1) {
+    handleClickTwo(evt)
+    cardTurn = 1
+  } else return
 }
 
 // Function to handle the Flip Card button click:
@@ -170,7 +175,8 @@ function handleClickOne(evt) {
   else {
     return
   }
-  return cardOneVal
+  // return cardOneVal
+  console.log("1", cardOneVal)
 }
 
 //Function to handle clicking on your second card
@@ -189,7 +195,8 @@ function handleClickTwo(evt) {
   else {
     return
   }
-  return cardTwoVal
+  // return cardTwoVal
+  console.log("2", cardTwoVal)
 }
 
 // Function to render deck state
@@ -219,7 +226,9 @@ function render(cardPicked) {
   }
 }
 
+function checkForWinner() {
 
+}
 
 // Define the required variables to track the state of the game.
   // cardOne: will store the value of the first card selected.
