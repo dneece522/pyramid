@@ -3,8 +3,8 @@
 let stock = [] // array to hold the cards in the stock pile
 let waste = [] // array to hold the cards in the waste pile
 let pyramid = [] // array to hold the shuffled cards in the pyramid
-let cardOneVal
-let cardTwoVal
+let cardOneVal // holds the value of the first card selected
+let cardTwoVal // holds the value of the second card selected
 let cardSum 
 let winner // if the board is clear, winner = true
 let noMoreMoves // if we've gone through the stock deck 3 times, noMoreMoves = true, game is over
@@ -150,22 +150,19 @@ function handleClick() {
   }
 }
 
-function handleClickOne(evt) {
-  if (evt.target.classList.contains('sA' || 'cA' || 'hA' || 'dA')) cardOneVal = 1 
-  else if (evt.target.classList.contains('s02' || 'c02' || 'h02' || 'd02')) cardOneVal = 2
-  else if (evt.target.classList.contains('s03' || 'c03' || 'h03' || 'd03')) cardOneVal = 3
-  else if (evt.target.classList.contains('s04' || 'c04' || 'h04' || 'd04')) cardOneVal = 4
-  else if (evt.target.classList.contains('s05' || 'c05' || 'h05' || 'd05')) cardOneVal = 5
-  else if (evt.target.classList.contains('s06' || 'c06' || 'h06' || 'd06')) cardOneVal = 6
-  else if (evt.target.classList.contains('s07' || 'c07' || 'h07' || 'd07')) cardOneVal = 7
-  else if (evt.target.classList.contains('s08' || 'c08' || 'h08' || 'd08')) cardOneVal = 8
-  else if (evt.target.classList.contains('s09' || 'c09' || 'h09' || 'd09')) cardOneVal = 9
-  else if (evt.target.classList.contains('s10' || 'c10' || 'h10' || 'd10')) cardOneVal = 10
-  else if (evt.target.classList.contains('sJ' || 'cJ' || 'hJ' || 'dJ')) cardOneVal = 11
-  else if (evt.target.classList.contains('sQ' || 'cQ' || 'hQ' || 'dQ')) cardOneVal = 12
-  else if (evt.target.classList.contains('sK' || 'cK' || 'hK' || 'dK')) cardOneVal = 13
+//Function to handle clicking on your first card
 
-  console.log(cardOneVal)
+function handleClickOne(evt) {
+  if (evt.target.classList.value.substring(12) === 'A') cardOneVal = 1 
+  else if (evt.target.classList.value.substring(12) === '10') cardOneVal = 10
+  else if (evt.target.classList.value.substring(12) === 'J') cardOneVal = 11
+  else if (evt.target.classList.value.substring(12) === 'Q') cardOneVal = 12
+  else if (evt.target.classList.value.substring(12) === 'K') cardOneVal = 13
+  else {
+    let stringVal = evt.target.classList.value.substring(13)
+    cardOneVal = parseInt(stringVal, 10)
+  }
+  return cardOneVal
 }
 
 // Function to render deck state
