@@ -54,9 +54,15 @@ let card27El = document.getElementById('p27')
 // Event listeners
 
 document.getElementById('flipBtn').addEventListener('click', handleClick) // event listener for Flip button
-card.addEventListener('click', turn) // event listener to call the turn() function, which calls the handleClick functions
+document.getElementById('rstBtn').addEventListener('click', refresh)
+card.addEventListener('click', coveredCards) // event listener to call the turn() function, which calls the handleClick functions
+
 
 // Functions
+
+function refresh() {
+  document.location.reload()
+}
 
 init()
 
@@ -201,9 +207,11 @@ function coveredCards(evt) {
   } else if (evt.target.id === 'p2') {
     if (card4El.classList.contains('outline') && card5El.classList.contains('outline')) turn(evt)
       else messageEl.textContent = 'This Card is Covered Up'
-  } else if (evt.target.id === 'p0') {
+  } else if (evt.target.id === 'p0') {                                                                // Row 0 starts here
     if (card1El.classList.contains('outline') && card2El.classList.contains('outline')) turn(evt)
       else messageEl.textContent = 'This Card is Covered Up'
+  } else {
+    turn(evt)
   }
 }
 
