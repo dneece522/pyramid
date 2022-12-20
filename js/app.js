@@ -57,7 +57,6 @@ document.getElementById('flipBtn').addEventListener('click', handleClick) // eve
 document.getElementById('rstBtn').addEventListener('click', refresh)
 card.addEventListener('click', coveredCards) // event listener to call the turn() function, which calls the handleClick functions
 
-
 // Functions
 
 // Refreshes the page when the reset game button is clicked
@@ -88,6 +87,9 @@ function pyramidRender() {
     // Pushes that value into pyramid array
     pyramid.push(cardGone)
   }
+  // Renders the first card in the stock array on the top of the stock pile
+  stockEl.classList.add(stock[0])
+  
   // Hard Code shuffled cards into the Pyramid
   card0El.classList.add(pyramid[0])
   card0El.classList.remove('outline')
@@ -232,17 +234,16 @@ function turn(evt) {          //Switches turns between choosing the first card a
 }
 
 // Function to handle the Flip Card button click:
-
 function handleClick() {
   if (stock.length > 0) {
     // Randomly select number from total cards remaining
     let randIdx = Math.floor(Math.random() * stock.length)
     // Assign card with the random index to a variable
     let cardPicked = stock.splice(randIdx, 1)[0]
-    // Add card picked to deck 2
+    // Add card picked to waste deck
     waste.push(cardPicked)
     // Pass card picked to render function to display
-    render(cardPicked)
+    renderDeck(cardPicked)
   }
 }
 
@@ -291,18 +292,18 @@ function handleClickTwo(evt) {
 }
 
 // Function to render deck state
-function render(cardPicked) {
+function renderDeck(cardPicked) {
 	// Remove outline class when first card is picked
   if (waste.length === 1) {
     wasteEl.classList.remove('outline')
   }
-  // Removes previous picked card from deck 2 class list
+  // Removes previous picked card from waste deck class list
   if (waste.length > 1) {
     wasteEl.classList.remove(cardToRemove)
   }
   // Set card to be removed on next click
   cardToRemove = cardPicked
-  // Add current card picked to deck 2 element
+  // Add current card picked to waste deck element
   wasteEl.classList.add(cardPicked)
 	// Adjust shadow when deck gets above/below halfway full
   if (waste.length === 12) {
@@ -350,3 +351,6 @@ function updateMessage() {
     return
   }
 }
+
+console.log('stock:', stock)
+console.log('waste', waste)
