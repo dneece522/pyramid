@@ -12,6 +12,7 @@ let winner // if the board is clear, winner = true
 let noMoreMoves // if we've gone through the stock deck 3 times, noMoreMoves = true, game is over
 let cardTurn // if this equals 1, then a click picks the first card, if it equals -1, a click picks the second card
 let cardToRemove
+let iteration
 
 // Cached element references
 
@@ -72,6 +73,7 @@ function init() {
   winner = false
   noMoreMoves = false
   cardTurn = 1
+  iteration = 0
   // Initialize stock with array of 52 cards 
   stock = ["dA","dQ","dK","dJ","d10","d09","d08","d07","d06","d05","d04","d03","d02","hA","hQ","hK","hJ","h10","h09","h08","h07","h06","h05","h04","h03","h02","cA","cQ","cK","cJ","c10","c09","c08","c07","c06","c05","c04","c03","c02","sA","sQ","sK","sJ","s10","s09","s08","s07","s06","s05","s04","s03","s02"]
   pyramidRender()
@@ -87,8 +89,8 @@ function pyramidRender() {
     // Pushes that value into pyramid array
     pyramid.push(cardGone)
   }
-  // Renders the first card in the stock array on the top of the stock pile
-  // stockEl.classList.add(stock[0])
+
+  stockEl.classList.add(stock[iteration])
 
   // Hard Code shuffled cards into the Pyramid
   card0El.classList.add(pyramid[0])
@@ -235,17 +237,22 @@ function turn(evt) {          //Switches turns between choosing the first card a
 
 // Function to handle the Flip Card button click:
 function handleClick() {
-  if (stock.length > 0) {
-    // Randomly select number from total cards remaining
-    let randIdx = Math.floor(Math.random() * stock.length)
-    // Assign card with the random index to a variable
-    let cardPicked = stock.splice(randIdx, 1)[0]
-    // Add card picked to waste deck
-    waste.push(cardPicked)
-    // Pass card picked to render function to display
-    renderDeck(cardPicked)
+  let cardPicked = stock[iteration]
+  iteration++
+  if (iteration >= stock.length) {
+    iteration = 0
+    messageEl.textContent = "The Stock Deck is Empty, Press the 'Reset Stock' Button"
+  } else {
+    stockEl.classList.add(stock[iteration])
   }
+  // Add card picked to waste deck
+  waste.push(cardPicked)
+  // Pass card picked to render function to display
+  renderDeck(cardPicked)
 }
+
+console.log('stock', stock)
+console.log('waste', waste)
 
 //Function to handle clicking on your first card
 function handleClickOne(evt) {
