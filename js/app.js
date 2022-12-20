@@ -88,8 +88,8 @@ function pyramidRender() {
     pyramid.push(cardGone)
   }
   // Renders the first card in the stock array on the top of the stock pile
-  stockEl.classList.add(stock[0])
-  
+  // stockEl.classList.add(stock[0])
+
   // Hard Code shuffled cards into the Pyramid
   card0El.classList.add(pyramid[0])
   card0El.classList.remove('outline')
@@ -331,6 +331,9 @@ if (cardSum === 13) {
   } else {
     return
   }
+  //this resets the card values to 0 after being checked, otherwise it could have lingering affects if new card1 equals 13 with old card2
+  cardOneVal = 0
+  cardTwoVal = 0
 }
 
 // clearCards() function clears the cards if they add up to 13
@@ -351,6 +354,3 @@ function updateMessage() {
     return
   }
 }
-
-console.log('stock:', stock)
-console.log('waste', waste)
