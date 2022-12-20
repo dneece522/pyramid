@@ -142,11 +142,12 @@ function pyramidRender() {
 // Function to determine if a card is covered up or not
 function coveredCards(evt) {
   if (evt.target.id === 'p15') {
-    if (card21El.classList.contains('outline') && card22El.classList.contains('outline')) {
-      turn(evt)
-    } else messageEl.textContent = 'This Card is Covered Up'
+    if (card21El.classList.contains('outline') && card22El.classList.contains('outline')) turn(evt)
+      else messageEl.textContent = 'This Card is Covered Up'
+  } else if (evt.target.id === 'p16') {
+    if (card22El.classList.contains('outline') && card23El.classList.contains('outline')) turn(evt)
+      else messageEl.textContent = 'This Card is Covered Up'
   }
-
 }
 
 function turn(evt) {          //Switches turns between choosing the first card and second card
