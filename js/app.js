@@ -60,12 +60,15 @@ card.addEventListener('click', coveredCards) // event listener to call the turn(
 
 // Functions
 
+// Refreshes the page when the reset game button is clicked
 function refresh() {
   document.location.reload()
 }
 
+// invoke init() function
 init()
 
+//sets variables to starting state, fills the stock with cards, calls renderPyramid() function
 function init() {
   winner = false
   noMoreMoves = false
@@ -76,7 +79,6 @@ function init() {
 }
 
 // Function to display shuffled cards on the pyramid
-
 function pyramidRender() {
   for (let i = 0; i < 28; i++) {
     // Assigns random index to randCard
@@ -149,67 +151,67 @@ function pyramidRender() {
 function coveredCards(evt) {
   if (evt.target.id === 'p15') {                                                                      // Row 5 starts here
     if (card21El.classList.contains('outline') && card22El.classList.contains('outline')) turn(evt)
-      else messageEl.textContent = 'This Card is Covered Up'
+      else messageEl.textContent = `This Card is Covered Up, Choose New ${cardTurn === 1 ? 'First' : 'Second'} Card`
   } else if (evt.target.id === 'p16') {
     if (card22El.classList.contains('outline') && card23El.classList.contains('outline')) turn(evt)
-      else messageEl.textContent = 'This Card is Covered Up'
+      else messageEl.textContent = `This Card is Covered Up, Choose New ${cardTurn === 1 ? 'First' : 'Second'} Card`
   } else if (evt.target.id === 'p17') {
     if (card23El.classList.contains('outline') && card24El.classList.contains('outline')) turn(evt)
-      else messageEl.textContent = 'This Card is Covered Up'
+      else messageEl.textContent = `This Card is Covered Up, Choose New ${cardTurn === 1 ? 'First' : 'Second'} Card`
   } else if (evt.target.id === 'p18') {
     if (card24El.classList.contains('outline') && card25El.classList.contains('outline')) turn(evt)
-      else messageEl.textContent = 'This Card is Covered Up'
+      else messageEl.textContent = `This Card is Covered Up, Choose New ${cardTurn === 1 ? 'First' : 'Second'} Card`
   } else if (evt.target.id === 'p19') {
     if (card25El.classList.contains('outline') && card26El.classList.contains('outline')) turn(evt)
-      else messageEl.textContent = 'This Card is Covered Up'
+      else messageEl.textContent = `This Card is Covered Up, Choose New ${cardTurn === 1 ? 'First' : 'Second'} Card`
   } else if (evt.target.id === 'p20') {
     if (card26El.classList.contains('outline') && card27El.classList.contains('outline')) turn(evt)
-      else messageEl.textContent = 'This Card is Covered Up'
+      else messageEl.textContent = `This Card is Covered Up, Choose New ${cardTurn === 1 ? 'First' : 'Second'} Card`
   } else if (evt.target.id === 'p10') {                                                               // Row 4 starts here
     if (card15El.classList.contains('outline') && card16El.classList.contains('outline')) turn(evt)
-      else messageEl.textContent = 'This Card is Covered Up'
+      else messageEl.textContent = `This Card is Covered Up, Choose New ${cardTurn === 1 ? 'First' : 'Second'} Card`
   } else if (evt.target.id === 'p11') {
     if (card16El.classList.contains('outline') && card17El.classList.contains('outline')) turn(evt)
-      else messageEl.textContent = 'This Card is Covered Up'
+      else messageEl.textContent = `This Card is Covered Up, Choose New ${cardTurn === 1 ? 'First' : 'Second'} Card`
   } else if (evt.target.id === 'p12') {
     if (card17El.classList.contains('outline') && card18El.classList.contains('outline')) turn(evt)
-      else messageEl.textContent = 'This Card is Covered Up'
+      else messageEl.textContent = `This Card is Covered Up, Choose New ${cardTurn === 1 ? 'First' : 'Second'} Card`
   } else if (evt.target.id === 'p13') {
     if (card18El.classList.contains('outline') && card19El.classList.contains('outline')) turn(evt)
-      else messageEl.textContent = 'This Card is Covered Up'
+      else messageEl.textContent = `This Card is Covered Up, Choose New ${cardTurn === 1 ? 'First' : 'Second'} Card`
   } else if (evt.target.id === 'p14') {
     if (card19El.classList.contains('outline') && card20El.classList.contains('outline')) turn(evt)
-      else messageEl.textContent = 'This Card is Covered Up'
+      else messageEl.textContent = `This Card is Covered Up, Choose New ${cardTurn === 1 ? 'First' : 'Second'} Card`
   } else if (evt.target.id === 'p6') {                                                                // Row 3 starts here
     if (card10El.classList.contains('outline') && card11El.classList.contains('outline')) turn(evt)
-      else messageEl.textContent = 'This Card is Covered Up'
+      else messageEl.textContent = `This Card is Covered Up, Choose New ${cardTurn === 1 ? 'First' : 'Second'} Card`
   } else if (evt.target.id === 'p7') {
     if (card11El.classList.contains('outline') && card12El.classList.contains('outline')) turn(evt)
-      else messageEl.textContent = 'This Card is Covered Up'
+      else messageEl.textContent = `This Card is Covered Up, Choose New ${cardTurn === 1 ? 'First' : 'Second'} Card`
   } else if (evt.target.id === 'p8') {
     if (card12El.classList.contains('outline') && card13El.classList.contains('outline')) turn(evt)
-      else messageEl.textContent = 'This Card is Covered Up'
+      else messageEl.textContent = `This Card is Covered Up, Choose New ${cardTurn === 1 ? 'First' : 'Second'} Card`
   } else if (evt.target.id === 'p9') {
     if (card13El.classList.contains('outline') && card14El.classList.contains('outline')) turn(evt)
-      else messageEl.textContent = 'This Card is Covered Up'
+      else messageEl.textContent = `This Card is Covered Up, Choose New ${cardTurn === 1 ? 'First' : 'Second'} Card`
   } else if (evt.target.id === 'p3') {                                                                // Row 2 starts here 
     if (card6El.classList.contains('outline') && card7El.classList.contains('outline')) turn(evt)
-      else messageEl.textContent = 'This Card is Covered Up'
+      else messageEl.textContent = `This Card is Covered Up, Choose New ${cardTurn === 1 ? 'First' : 'Second'} Card`
   } else if (evt.target.id === 'p4') {
     if (card7El.classList.contains('outline') && card8El.classList.contains('outline')) turn(evt)
-      else messageEl.textContent = 'This Card is Covered Up'
+      else messageEl.textContent = `This Card is Covered Up, Choose New ${cardTurn === 1 ? 'First' : 'Second'} Card`
   } else if (evt.target.id === 'p5') {
     if (card8El.classList.contains('outline') && card9El.classList.contains('outline')) turn(evt)
-      else messageEl.textContent = 'This Card is Covered Up'
+      else messageEl.textContent = `This Card is Covered Up, Choose New ${cardTurn === 1 ? 'First' : 'Second'} Card`
   } else if (evt.target.id === 'p1') {                                                                // Row 1 starts here 
     if (card3El.classList.contains('outline') && card4El.classList.contains('outline')) turn(evt)
-      else messageEl.textContent = 'This Card is Covered Up'
+      else messageEl.textContent = `This Card is Covered Up, Choose New ${cardTurn === 1 ? 'First' : 'Second'} Card`
   } else if (evt.target.id === 'p2') {
     if (card4El.classList.contains('outline') && card5El.classList.contains('outline')) turn(evt)
-      else messageEl.textContent = 'This Card is Covered Up'
+      else messageEl.textContent = `This Card is Covered Up, Choose New ${cardTurn === 1 ? 'First' : 'Second'} Card`
   } else if (evt.target.id === 'p0') {                                                                // Row 0 starts here
     if (card1El.classList.contains('outline') && card2El.classList.contains('outline')) turn(evt)
-      else messageEl.textContent = 'This Card is Covered Up'
+      else messageEl.textContent = `This Card is Covered Up, Choose New ${cardTurn === 1 ? 'First' : 'Second'} Card`
   } else {
     turn(evt)
   }
