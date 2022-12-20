@@ -18,6 +18,8 @@ let cardToRemove
 let stockEl = document.getElementById('stock') //variable to access the stock pile
 let wasteEl = document.getElementById('waste') //variable to access the waste pile
 let card = document.getElementById('pyramid') //variable to click a card in the pyramid
+let stockRstCount = document.getElementById('stock-count')
+let messageEl = document.getElementById('message')
 
       // Cached Elements for Each Card in the Pyramid
 let card0El = document.getElementById('p0')
@@ -148,6 +150,7 @@ function turn(evt) {          //Switches turns between choosing the first card a
     handleClickTwo(evt)
   } else return
   checkForWinner(cardOneVal, cardTwoVal)
+  updateMessage()
 }
 
 // Function to handle the Flip Card button click:
@@ -255,4 +258,17 @@ if (cardSum === 13) {
 function clearCards() {
   cardOneEl.classList = 'card small outline'
   cardTwoEl.classList = 'card small outline'
+}
+
+// renders the state of the game through on-screen messages
+function updateMessage() {
+  if (winner === false && noMoreMoves === false) {
+    messageEl.textContent = `Choose Your ${cardTurn === 1 ? "First" : "Second"} Card`
+  } else if (winner === true && noMoreMoves === false) {
+    messageEl.textContent = "Congratulations! You Win!"
+  } else if (winner === false && noMoreMoves === true) {
+    messageEl.textContent = "Sorry, you're all out of moves!"
+  } else {
+    return
+  }
 }

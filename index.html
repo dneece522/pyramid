@@ -12,32 +12,32 @@
 </head>
 <body>
 	<div id="pyramid">
-		<div class="row0">
+		<div id="row0" class="rows">
 			<div id="p0" class="card small outline"></div>
 		</div>
-		<div class="row1">
+		<div id="row1" class="rows">
 			<div id="p1" class="card small outline"></div>
 			<div id="p2" class="card small outline"></div>
 		</div>
-		<div class="row2">
+		<div id="row2" class="rows">
 			<div id="p3" class="card small outline"></div>
 			<div id="p4" class="card small outline"></div>
 			<div id="p5" class="card small outline"></div>
 		</div>
-		<div class="row3">
+		<div id="row3" class="rows">
 			<div id="p6" class="card small outline"></div>
 			<div id="p7" class="card small outline"></div>
 			<div id="p8" class="card small outline"></div>
 			<div id="p9" class="card small outline"></div>
 		</div>
-		<div class="row4">
+		<div id="row4" class="rows">
 			<div id="p10" class="card small outline"></div>
 			<div id="p11" class="card small outline"></div>
 			<div id="p12" class="card small outline"></div>
 			<div id="p13" class="card small outline"></div>
 			<div id="p14" class="card small outline"></div>
 		</div>
-		<div class="row5">
+		<div id="row5" class="rows">
 			<div id="p15" class="card small outline"></div>
 			<div id="p16" class="card small outline"></div>
 			<div id="p17" class="card small outline"></div>
@@ -45,7 +45,7 @@
 			<div id="p19" class="card small outline"></div>
 			<div id="p20" class="card small outline"></div>
 		</div>
-		<div class="row6">
+		<div id="row6" class="rows">
 			<div id="p21" class="card small outline"></div>
 			<div id="p22" class="card small outline"></div>
 			<div id="p23" class="card small outline"></div>
@@ -59,8 +59,16 @@
 		<div id="stock" class="card small back-red shadow"></div>
 		<div id="waste" class="card small outline"></div>
 	</div>
-	<button id="flipBtn" class="btn">Flip Card</button>
-	<button id="rstStock" class="btn">Reset Stock</button>
-	<button id="rstBtn" class="btn">Reset Game</button>
+	<div class="tracker">
+		<h6>
+			Stock Pile Resets Remaining: <span id="stock-count">2</span>
+		</h6>
+	</div>
+	<div class="btns">
+		<button id="flipBtn" class="btn">Flip Card</button>
+		<button id="rstStock" class="btn">Reset Stock</button>
+		<button id="rstBtn" class="btn">Reset Game</button>
+	</div>
+	<h3 id="message">Choose Your First Card <span id="starter">To Begin</span></h3>
 </body>
 </html>
