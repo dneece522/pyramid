@@ -76,6 +76,13 @@ function init() {
   iteration = 0
   // Initialize stock with array of 52 cards 
   stock = ["dA","dQ","dK","dJ","d10","d09","d08","d07","d06","d05","d04","d03","d02","hA","hQ","hK","hJ","h10","h09","h08","h07","h06","h05","h04","h03","h02","cA","cQ","cK","cJ","c10","c09","c08","c07","c06","c05","c04","c03","c02","sA","sQ","sK","sJ","s10","s09","s08","s07","s06","s05","s04","s03","s02"]
+  // This for loop below shuffles the stock array above (shuffles the deck) when the game initializes
+  for (let i = stock.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1))
+    let temp = stock[i]
+    stock[i] = stock[j]
+    stock[j] = temp
+  }
   pyramidRender()
 }
 
@@ -94,61 +101,33 @@ function pyramidRender() {
 
   // Hard Code shuffled cards into the Pyramid
   card0El.classList.add(pyramid[0])
-  card0El.classList.remove('outline')
   card1El.classList.add(pyramid[1])
-  card1El.classList.remove('outline')
   card2El.classList.add(pyramid[2])
-  card2El.classList.remove('outline')
   card3El.classList.add(pyramid[3])
-  card3El.classList.remove('outline')
   card4El.classList.add(pyramid[4])
-  card4El.classList.remove('outline')
   card5El.classList.add(pyramid[5])
-  card5El.classList.remove('outline')
   card6El.classList.add(pyramid[6])
-  card6El.classList.remove('outline')
   card7El.classList.add(pyramid[7])
-  card7El.classList.remove('outline')
   card8El.classList.add(pyramid[8])
-  card8El.classList.remove('outline')
   card9El.classList.add(pyramid[9])
-  card9El.classList.remove('outline')
   card10El.classList.add(pyramid[10])
-  card10El.classList.remove('outline')
   card11El.classList.add(pyramid[11])
-  card11El.classList.remove('outline')
   card12El.classList.add(pyramid[12])
-  card12El.classList.remove('outline')
   card13El.classList.add(pyramid[13])
-  card13El.classList.remove('outline')
   card14El.classList.add(pyramid[14])
-  card14El.classList.remove('outline')
   card15El.classList.add(pyramid[15])
-  card15El.classList.remove('outline')
   card16El.classList.add(pyramid[16])
-  card16El.classList.remove('outline')
   card17El.classList.add(pyramid[17])
-  card17El.classList.remove('outline')
   card18El.classList.add(pyramid[18])
-  card18El.classList.remove('outline')
   card19El.classList.add(pyramid[19])
-  card19El.classList.remove('outline')
   card20El.classList.add(pyramid[20])
-  card20El.classList.remove('outline')
   card21El.classList.add(pyramid[21])
-  card21El.classList.remove('outline')
   card22El.classList.add(pyramid[22])
-  card22El.classList.remove('outline')
   card23El.classList.add(pyramid[23])
-  card23El.classList.remove('outline')
   card24El.classList.add(pyramid[24])
-  card24El.classList.remove('outline')
   card25El.classList.add(pyramid[25])
-  card25El.classList.remove('outline')
   card26El.classList.add(pyramid[26])
-  card26El.classList.remove('outline')
   card27El.classList.add(pyramid[27])
-  card27El.classList.remove('outline')
 }
 
 // Function to determine if a card is covered up or not
