@@ -223,6 +223,9 @@ function handleClick() {
       updateMessage()
     }
   }
+  if (stock.length === waste.length) {
+    stockEl.classList === 'card small outline'
+  }
   // Add card picked to waste deck
   waste.push(cardPicked)
   // Pass card picked to render function to display
@@ -234,7 +237,7 @@ function stockReset() {
   waste = []
   wasteEl.classList = 'card small outline'
   stockEl.classList.remove('outline')
-  stockEl.classList.add('shadow')
+  //stockEl.classList.add('shadow')
   stockEl.classList.add(stock[0])
   resetCount--
   stockRstCount.textContent = resetCount.toString()
@@ -247,11 +250,7 @@ function handleClickOne(evt) {
   let cardIdx
   let stringVal
   //sets cardIdx to the card type based on the class
-  if (evt.target.classList.contains('shadow')) {
-    cardIdx = evt.target.classList.value.substring(19)
-  } else {
-    cardIdx = evt.target.classList.value.substring(12)
-  }
+  cardIdx = evt.target.classList.value.substring(12)
   //if else statements determining what numeric value to assign the card picked
   if (cardIdx === 'A') cardOneVal = 1 
   else if (cardIdx === '10') cardOneVal = 10
@@ -260,9 +259,6 @@ function handleClickOne(evt) {
   //if the card is a King, run the isKing() function to clear that card and start over on 1st card choice
   else if (cardIdx === 'K') {
     isKing()
-  } else if (cardIdx.length === 2 && evt.target.classList.contains('shadow')) { 
-    stringVal = evt.target.classList.value.substring(20)
-    cardOneVal = parseInt(stringVal, 10)
   } else if (parseInt(cardIdx, 10) < 10) {
     stringVal = evt.target.classList.value.substring(13)
     cardOneVal = parseInt(stringVal, 10)
@@ -279,21 +275,14 @@ function handleClickTwo(evt) {
   let cardIdx
   let stringVal
   //sets cardIdx to the card type based on the class
-  if (evt.target.classList.contains('shadow')) {
-    cardIdx = evt.target.classList.value.substring(19)
-  } else {
-    cardIdx = evt.target.classList.value.substring(12)
-  }
+  cardIdx = evt.target.classList.value.substring(12)
   //if else statements determining what numeric value to assign the card picked
   if (cardIdx === 'A') cardTwoVal = 1 
   else if (cardIdx === '10') cardTwoVal = 10
   else if (cardIdx === 'J') cardTwoVal = 11
   else if (cardIdx === 'Q') cardTwoVal = 12
   else if (cardIdx === 'K') cardTwoVal = 13
-  else if (cardIdx.length === 2 && evt.target.classList.contains('shadow')) { 
-    stringVal = evt.target.classList.value.substring(20)
-    cardTwoVal = parseInt(stringVal, 10)
-  } else if (parseInt(cardIdx, 10) < 10) {
+  else if (parseInt(cardIdx, 10) < 10) {
     stringVal = evt.target.classList.value.substring(13)
     cardTwoVal = parseInt(stringVal, 10)
   }
@@ -318,18 +307,6 @@ function renderDeck(cardPicked) {
   cardToRemove = cardPicked
   // Add current card picked to waste deck element
   wasteEl.classList.add(cardPicked)
-	// Adjust shadow when deck gets above/below halfway full
-  if (waste.length > stock.length / 2) {
-    if (stockEl.classList.contains('shadow')) {
-      wasteEl.classList.add('shadow')
-      stockEl.classList.remove('shadow')
-    }
-  } else {
-    if (wasteEl.classList.contains('shadow')) {
-      stockEl.classList.add('shadow')
-      wasteEl.classList.remove('shadow')
-    }
-  }
 }
 
 // Function to clear a King card and go back to first card choice
@@ -406,6 +383,8 @@ function clearCards() {
     cardOneEl.classList = 'card small outline'
     cardTwoEl.classList = 'card small outline'
   }
+  console.log(stock)
+  console.log(waste)
 }
 
 // renders the state of the game through on-screen messages
