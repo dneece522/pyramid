@@ -252,6 +252,7 @@ function stockReset() {
   waste = []
   wasteEl.classList = 'card small outline'
   stockEl.classList.remove('outline')
+  stockEl.classList.add('shadow')
   stockEl.classList.add(stock[0])
   resetCount--
   stockRstCount.textContent = resetCount.toString()
@@ -318,14 +319,16 @@ function renderDeck(cardPicked) {
   // Add current card picked to waste deck element
   wasteEl.classList.add(cardPicked)
 	// Adjust shadow when deck gets above/below halfway full
-  if (waste.length === 12) {
-    wasteEl.classList.add('shadow')
-    stockEl.classList.remove('shadow')
-  }
-	// Remove card back color and add outline when last card is picked
-  if (stock.length === 0) {
-    stockEl.classList.add('outline')
-    stockEl.classList.remove('back-red')
+  if (waste.length > stock.length / 2) {
+    if (stockEl.classList.contains('shadow')) {
+      wasteEl.classList.add('shadow')
+      stockEl.classList.remove('shadow')
+    }
+  } else {
+    if (wasteEl.classList.contains('shadow')) {
+      stockEl.classList.add('shadow')
+      wasteEl.classList.remove('shadow')
+    }
   }
 }
 
