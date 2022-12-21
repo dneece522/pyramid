@@ -375,20 +375,25 @@ function checkForWinner(card1, card2) {
 function clearCards() {
   if (cardOneEl.id === 'stock' && cardTwoEl.id !== 'stock' && cardTwoEl.id !== 'waste') { //if card 1 is from the stock deck and card 2 is from the pyramid
     stockEl.classList.remove('outline')
+    stockEl.classList.remove(stock[iteration])
     stock.splice(iteration, 1)
     stockEl.classList.add(stock[iteration])
     cardTwoEl.classList = 'card small outline'
   } else if (cardOneEl.id !== 'stock' && cardOneEl.id !== 'waste' && cardTwoEl.id === 'stock') { //if card 1 is from the pyramid and card 2 is from the stock deck
     stockEl.classList.remove('outline')
+    stockEl.classList.remove(stock[iteration])
     stock.splice(iteration, 1)
-    //filler to show next card in stock array in the stock deck
+    stockEl.classList.add(stock[iteration])
     cardOneEl.classList = 'card small outline'
   } else if (cardOneEl.id === 'waste' && cardTwoEl.id !== 'stock' && cardTwoEl.id !== 'waste') { //if card 1 is from the waste deck and card 2 is from the pyramid
     wasteEl.classList.remove('outline')
+    wasteEl.classList.remove(waste[iteration - 1])
     waste.pop()
     stock.splice(iteration - 1, 1)
-    //filler to show next card in stock array in the stock deck
+    wasteEl.classList.add(waste[iteration - 2])
     cardTwoEl.classList = 'card small outline'
+    console.log(stock)
+    console.log(waste)
   } else if (cardOneEl.id !== 'stock' && cardOneEl.id !== 'waste' && cardTwoEl.id === 'waste') { //if card 1 is from the pyramid and card 2 is from the waste deck
     wasteEl.classList.remove('outline')
     waste.pop()
