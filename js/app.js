@@ -333,8 +333,23 @@ function renderDeck(cardPicked) {
 
 // Function to clear a King card and go back to first card choice
 function isKing() {
-  cardTurn = 1
-  cardOneEl.classList = 'card small outline'
+  if (cardOneEl.id === 'stock') {
+    cardTurn = 1
+    stockEl.classList.remove('outline')
+    stockEl.classList.remove(stock[iteration])
+    stock.splice(iteration, 1)
+    stockEl.classList.add(stock[iteration])
+  } else if (cardOneEl.id === 'waste') {
+    cardTurn = 1
+    wasteEl.classList.remove('outline')
+    wasteEl.classList.remove(waste[iteration - 1])
+    waste.pop()
+    stock.splice(iteration - 1, 1)
+    wasteEl.classList.add(waste[iteration - 2])
+  } else {
+    cardTurn = 1
+    cardOneEl.classList = 'card small outline'
+  }
 }
 
 // Function checks to see if cards add up to 13 and if the board is cleared
@@ -361,7 +376,7 @@ function clearCards() {
   if (cardOneEl.id === 'stock' && cardTwoEl.id !== 'stock' && cardTwoEl.id !== 'waste') { //if card 1 is from the stock deck and card 2 is from the pyramid
     stockEl.classList.remove('outline')
     stock.splice(iteration, 1)
-    //filler to show next card in stock array in the stock deck
+    stockEl.classList.add(stock[iteration])
     cardTwoEl.classList = 'card small outline'
   } else if (cardOneEl.id !== 'stock' && cardOneEl.id !== 'waste' && cardTwoEl.id === 'stock') { //if card 1 is from the pyramid and card 2 is from the stock deck
     stockEl.classList.remove('outline')
@@ -387,8 +402,6 @@ function clearCards() {
     //filler to show next card in stock array in the stock deck
     waste.pop()
     stock.splice(iteration - 1, 1)
-    console.log(stock)
-    console.log(waste)
   } else {                                        //if both cards are from the pyramid
     cardOneEl.classList = 'card small outline'
     cardTwoEl.classList = 'card small outline'
