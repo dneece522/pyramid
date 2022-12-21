@@ -55,6 +55,7 @@ let card24El = document.getElementById('p24')
 let card25El = document.getElementById('p25')
 let card26El = document.getElementById('p26')
 let card27El = document.getElementById('p27')
+let cachedCardsArray = [card0El, card1El, card2El, card3El, card4El, card5El, card6El, card7El, card8El, card9El, card10El, card11El, card12El, card13El, card14El, card15El,card16El, card17El, card18El, card19El, card20El, card21El, card22El, card23El, card24El, card25El, card26El, card27El]
 
 // Event listeners
 
@@ -70,6 +71,8 @@ wasteEl.addEventListener('click', turn)
 // Refreshes the page when the reset game button is clicked
 function refresh() {
   document.location.reload()
+  // init()
+  // pyramidRender()
 }
 
 // invoke init() function
@@ -108,35 +111,10 @@ function pyramidRender() {
 
   stockEl.classList.add(stock[iteration])
 
-  // Hard Code shuffled cards into the Pyramid
-  card0El.classList.add(pyramid[0])
-  card1El.classList.add(pyramid[1])
-  card2El.classList.add(pyramid[2])
-  card3El.classList.add(pyramid[3])
-  card4El.classList.add(pyramid[4])
-  card5El.classList.add(pyramid[5])
-  card6El.classList.add(pyramid[6])
-  card7El.classList.add(pyramid[7])
-  card8El.classList.add(pyramid[8])
-  card9El.classList.add(pyramid[9])
-  card10El.classList.add(pyramid[10])
-  card11El.classList.add(pyramid[11])
-  card12El.classList.add(pyramid[12])
-  card13El.classList.add(pyramid[13])
-  card14El.classList.add(pyramid[14])
-  card15El.classList.add(pyramid[15])
-  card16El.classList.add(pyramid[16])
-  card17El.classList.add(pyramid[17])
-  card18El.classList.add(pyramid[18])
-  card19El.classList.add(pyramid[19])
-  card20El.classList.add(pyramid[20])
-  card21El.classList.add(pyramid[21])
-  card22El.classList.add(pyramid[22])
-  card23El.classList.add(pyramid[23])
-  card24El.classList.add(pyramid[24])
-  card25El.classList.add(pyramid[25])
-  card26El.classList.add(pyramid[26])
-  card27El.classList.add(pyramid[27])
+  // For loop to add shuffled cards into the Pyramid
+  for (let i = 0; i < cachedCardsArray.length; i++) {
+    cachedCardsArray[i].classList.add(pyramid[i])
+  }
 }
 
 // Function to determine if a card is covered up or not
