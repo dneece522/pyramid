@@ -1,31 +1,31 @@
 // Declare deck variables
 
-let stock = [] // array to hold the cards in the stock pile
-let waste = [] // array to hold the cards in the waste pile
+let stock = []   // array to hold the cards in the stock pile
+let waste = []   // array to hold the cards in the waste pile
 let pyramid = [] // array to hold the shuffled cards in the pyramid
-let cardOneVal // holds the value of the first card selected
-let cardTwoVal // holds the value of the second card selected
-let cardOneEl
-let cardTwoEl
-let cardSum // holds the sum of card 1 and card 2 to check if it equals 13
-let winner // if the board is clear, winner = true
-let noMoreMoves // if we've gone through the stock deck 3 times, noMoreMoves = true, game is over
-let cardTurn // if this equals 1, then a click picks the first card, if it equals -1, a click picks the second card
-let cardToRemove
-let iteration
-let resetCount = 2
+let cardOneVal   // holds the numeric value of the first card selected
+let cardTwoVal   // holds the numeric value of the second card selected
+let cardOneEl    // holds the cached DOM element of the first card selected 
+let cardTwoEl    // holds the cached DOM element of the second card selected 
+let cardSum      // holds the sum of card 1 and card 2 to check if it equals 13
+let winner       // if the board is clear, winner = true
+let noMoreMoves  // if we've gone through the stock deck 3 times, noMoreMoves = true, game is over
+let cardTurn     // if this equals 1, then a click picks the first card, if it equals -1, a click picks the second card
+let cardToRemove // used in the renderDeck function to hold the value of the card previously on the waste deck
+let iteration    // used throughout the program to keep count of how many times the user has gone through the stock deck
+let resetCount   // keeps track of how many times the stock deck has been reset
 
 // Cached element references
 
-let stockEl = document.getElementById('stock') //variable to access the stock pile
-let wasteEl = document.getElementById('waste') //variable to access the waste pile
-let card = document.getElementById('pyramid') //variable to click a card in the pyramid
-let stockRstCount = document.getElementById('stock-count')
-let messageEl = document.getElementById('message')
-let flipBtn = document.getElementById('flipBtn')
-let rstStock = document.getElementById('rstStock')
-let container = document.getElementById('container')
-let newGameBtn = document.getElementById('rstBtn')
+let stockEl = document.getElementById('stock')             //variable to access the stock pile
+let wasteEl = document.getElementById('waste')             //variable to access the waste pile
+let card = document.getElementById('pyramid')              //variable to click a card in the pyramid
+let stockRstCount = document.getElementById('stock-count') //used to render the amount of stock resets remaining
+let messageEl = document.getElementById('message')         //used to render messages on the screen
+let flipBtn = document.getElementById('flipBtn')           //button used to flip cards from the stock to waste pile
+let rstStock = document.getElementById('rstStock')         //button used to reset the stock when it reaches the end
+let container = document.getElementById('container')       //used to listen if either the stock or waste pile is clicked
+let newGameBtn = document.getElementById('rstBtn')         //button used to reset the game
 
       // Cached Elements for Each Card in the Pyramid
 let card0El = document.getElementById('p0')
@@ -56,16 +56,17 @@ let card24El = document.getElementById('p24')
 let card25El = document.getElementById('p25')
 let card26El = document.getElementById('p26')
 let card27El = document.getElementById('p27')
+      //array to hold each card element in the pyramid, used to set the board using a loop
 let cachedCardsArray = [card0El, card1El, card2El, card3El, card4El, card5El, card6El, card7El, card8El, card9El, card10El, card11El, card12El, card13El, card14El, card15El,card16El, card17El, card18El, card19El, card20El, card21El, card22El, card23El, card24El, card25El, card26El, card27El]
 
 // Event listeners
 
 flipBtn.addEventListener('click', handleClick) // event listener for Flip button
-newGameBtn.addEventListener('click', refresh)
-card.addEventListener('click', coveredCards) // event listener to call the turn() function, which calls the handleClick functions
-rstStock.addEventListener('click', stockReset)
-stockEl.addEventListener('click', turn)
-wasteEl.addEventListener('click', turn)
+newGameBtn.addEventListener('click', refresh)  // listens for when the New Game button is clicked
+card.addEventListener('click', coveredCards)   // event listener to call the turn() function, which calls the handleClick functions
+rstStock.addEventListener('click', stockReset) // listens for when the Reset Stock button is clicked
+stockEl.addEventListener('click', turn)        // listens to when a stock card is clicked
+wasteEl.addEventListener('click', turn)        // listens to when a waste card is clicked
 
 // Functions
 
@@ -81,12 +82,14 @@ init()
 
 //sets variables to starting state, fills the stock with cards, calls renderPyramid() function
 function init() {
+  // setting all of the variable states to start the game
   winner = false
   noMoreMoves = false
   cardTurn = 1
   iteration = 0
-  stockRstCount.textContent = '2'
-  rstStock.setAttribute('disabled', '')
+  resetCount = 2
+  stockRstCount.textContent = '2' // renders the number of stock resets left for the user
+  rstStock.setAttribute('disabled', '') // disables the Reset Stock button until the user has gone all the way through the stock pile
   // Initialize stock with array of 52 cards 
   stock = ["dA","dQ","dK","dJ","d10","d09","d08","d07","d06","d05","d04","d03","d02","hA","hQ","hK","hJ","h10","h09","h08","h07","h06","h05","h04","h03","h02","cA","cQ","cK","cJ","c10","c09","c08","c07","c06","c05","c04","c03","c02","sA","sQ","sK","sJ","s10","s09","s08","s07","s06","s05","s04","s03","s02"]
   // This for loop below shuffles the stock array above (shuffles the deck) when the game initializes (credit to stackoverflow.com)
@@ -101,6 +104,7 @@ function init() {
 
 // Function to display shuffled cards on the pyramid
 function pyramidRender() {
+  //picks 28 random cards out of shuffled deck to populate the pyramid
   for (let i = 0; i < 28; i++) {
     // Assigns random index to randCard
     let randCard = Math.floor(Math.random() * stock.length)
@@ -109,7 +113,7 @@ function pyramidRender() {
     // Pushes that value into pyramid array
     pyramid.push(cardGone)
   }
-
+  //displays the first card in the stock array on the stock pile (iteration = 0)
   stockEl.classList.add(stock[iteration])
 
   // For loop to add shuffled cards into the Pyramid
@@ -188,25 +192,26 @@ function coveredCards(evt) {
   }
 }
 
-function turn(evt) {          //Switches turns between choosing the first card and second card
-  if (cardTurn === 1) {
-    cardOneEl = evt.target
-    cardTurn = -1
-    handleClickOne(evt)
-  } else if (cardTurn === -1) {
-    cardTwoEl = evt.target
-    cardTurn = 1
-    handleClickTwo(evt)
+//Switches turns between choosing the first card and second card
+function turn(evt) {
+  if (cardTurn === 1) {         //if cardTurn = 1, then choose the first card
+    cardOneEl = evt.target      //set cardOneEl equal to the DOM element of the first card selected
+    cardTurn = -1               //changes the turn to pick the second card
+    handleClickOne(evt)         //call handleClickOne function
+  } else if (cardTurn === -1) { //if cardTurn = -1, then choose the second card
+    cardTwoEl = evt.target      //set cardTwoEl equal to the DOM element of the second card selected
+    cardTurn = 1                //changes the turn back to pick the first card
+    handleClickTwo(evt)         //call handleClickTwo function
   } else return
-  checkForWinner(cardOneVal, cardTwoVal)
-  updateMessage()
+  checkForWinner(cardOneVal, cardTwoVal) //send the numeric values from cards 1 and 2 to checkForWinnder() to see if they equal 13
+  updateMessage()                        //render any changes to the screen in the form of a message
 }
 
 // Function to handle the Flip Card button click:
 function handleClick() {
-  let cardPicked = stock[iteration]
-  stockEl.classList.remove(stock[iteration])
-  iteration++
+  let cardPicked = stock[iteration]          //set cardPicked equal to the current card shown in the stock pile (array)
+  stockEl.classList.remove(stock[iteration]) //remove that same card being shown on the screen from the stock pile
+  iteration++                                //add 1 to the iteration count
   if (iteration < stock.length) {
     stockEl.classList.add(stock[iteration])
   } else {
@@ -222,9 +227,6 @@ function handleClick() {
       flipBtn.setAttribute('disabled', '')
       updateMessage()
     }
-  }
-  if (stock.length === waste.length) {
-    stockEl.classList === 'card small outline'
   }
   // Add card picked to waste deck
   waste.push(cardPicked)
@@ -302,6 +304,9 @@ function renderDeck(cardPicked) {
   // Removes previous picked card from waste deck class list
   if (waste.length > 1) {
     wasteEl.classList.remove(cardToRemove)
+  }
+  if (stock.length === waste.length - 1) {
+    stockEl.classList === 'card small outline'
   }
   // Set card to be removed on next click
   cardToRemove = cardPicked
