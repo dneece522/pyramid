@@ -13,6 +13,7 @@ let noMoreMoves // if we've gone through the stock deck 3 times, noMoreMoves = t
 let cardTurn // if this equals 1, then a click picks the first card, if it equals -1, a click picks the second card
 let cardToRemove
 let iteration
+let resetCount = 2
 
 // Cached element references
 
@@ -22,6 +23,7 @@ let card = document.getElementById('pyramid') //variable to click a card in the 
 let stockRstCount = document.getElementById('stock-count')
 let messageEl = document.getElementById('message')
 let flipBtn = document.getElementById('flipBtn')
+let rstStock = document.getElementById('rstStock')
 
       // Cached Elements for Each Card in the Pyramid
 let card0El = document.getElementById('p0')
@@ -58,6 +60,7 @@ let card27El = document.getElementById('p27')
 flipBtn.addEventListener('click', handleClick) // event listener for Flip button
 document.getElementById('rstBtn').addEventListener('click', refresh)
 card.addEventListener('click', coveredCards) // event listener to call the turn() function, which calls the handleClick functions
+rstStock.addEventListener('click', stockReset)
 
 // Functions
 
@@ -75,6 +78,8 @@ function init() {
   noMoreMoves = false
   cardTurn = 1
   iteration = 0
+  stockRstCount.textContent = '2'
+  rstStock.setAttribute('disabled', '')
   // Initialize stock with array of 52 cards 
   stock = ["dA","dQ","dK","dJ","d10","d09","d08","d07","d06","d05","d04","d03","d02","hA","hQ","hK","hJ","h10","h09","h08","h07","h06","h05","h04","h03","h02","cA","cQ","cK","cJ","c10","c09","c08","c07","c06","c05","c04","c03","c02","sA","sQ","sK","sJ","s10","s09","s08","s07","s06","s05","s04","s03","s02"]
   // This for loop below shuffles the stock array above (shuffles the deck) when the game initializes (credit to stackoverflow.com)
@@ -223,10 +228,17 @@ function handleClick() {
   if (iteration < stock.length) {
     stockEl.classList.add(stock[iteration])
   } else {
-    stockEl.classList.add('outline')
-    iteration = 0
-    messageEl.textContent = "The Stock Deck is Empty, Press the 'Reset Stock' Button"
-    flipBtn.setAttribute('disabled', '')
+    if (resetCount > 0) {
+      stockEl.classList.add('outline')
+      iteration = 0
+      messageEl.textContent = "The Stock Deck is Empty, Press the 'Reset Stock' Button"
+      flipBtn.setAttribute('disabled', '')
+      rstStock.removeAttribute('disabled')
+    } else {
+      noMoreMoves = true
+      flipBtn.setAttribute('disabled', '')
+      updateMessage()
+    }
   }
   // Add card picked to waste deck
   waste.push(cardPicked)
@@ -234,8 +246,17 @@ function handleClick() {
   renderDeck(cardPicked)
 }
 
-console.log('stock', stock)
-console.log('waste', waste)
+function stockReset() {
+  stock = waste
+  waste = []
+  wasteEl.classList = 'card small outline'
+  stockEl.classList.remove('outline')
+  stockEl.classList.add(stock[0])
+  resetCount--
+  stockRstCount.textContent = resetCount.toString()
+  flipBtn.removeAttribute('disabled')
+  rstStock.setAttribute('disabled', '')
+}
 
 //Function to handle clicking on your first card
 function handleClickOne(evt) {
@@ -313,13 +334,16 @@ function isKing() {
   cardOneEl.classList = 'card small outline'
 }
 
-// Function checks to see if cards add up to 13
+// Function checks to see if cards add up to 13 and if the board is cleared
 function checkForWinner(card1, card2) {
   cardSum = card1 + card2
-if (cardSum === 13) {
-  clearCards()
+  if (cardSum === 13) {
+    clearCards()
   } else {
     return
+  }
+  if () {
+
   }
   //this resets the card values to 0 after being checked, otherwise it could have lingering affects if new card1 equals 13 with old card2
   cardOneVal = 0
