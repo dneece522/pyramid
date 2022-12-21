@@ -21,6 +21,7 @@ let wasteEl = document.getElementById('waste') //variable to access the waste pi
 let card = document.getElementById('pyramid') //variable to click a card in the pyramid
 let stockRstCount = document.getElementById('stock-count')
 let messageEl = document.getElementById('message')
+let flipBtn = document.getElementById('flipBtn')
 
       // Cached Elements for Each Card in the Pyramid
 let card0El = document.getElementById('p0')
@@ -54,7 +55,7 @@ let card27El = document.getElementById('p27')
 
 // Event listeners
 
-document.getElementById('flipBtn').addEventListener('click', handleClick) // event listener for Flip button
+flipBtn.addEventListener('click', handleClick) // event listener for Flip button
 document.getElementById('rstBtn').addEventListener('click', refresh)
 card.addEventListener('click', coveredCards) // event listener to call the turn() function, which calls the handleClick functions
 
@@ -225,6 +226,7 @@ function handleClick() {
     stockEl.classList.add('outline')
     iteration = 0
     messageEl.textContent = "The Stock Deck is Empty, Press the 'Reset Stock' Button"
+    flipBtn.setAttribute('disabled', '')
   }
   // Add card picked to waste deck
   waste.push(cardPicked)
