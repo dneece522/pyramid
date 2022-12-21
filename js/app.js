@@ -25,6 +25,7 @@ let messageEl = document.getElementById('message')
 let flipBtn = document.getElementById('flipBtn')
 let rstStock = document.getElementById('rstStock')
 let container = document.getElementById('container')
+let newGameBtn = document.getElementById('rstBtn')
 
       // Cached Elements for Each Card in the Pyramid
 let card0El = document.getElementById('p0')
@@ -60,7 +61,7 @@ let cachedCardsArray = [card0El, card1El, card2El, card3El, card4El, card5El, ca
 // Event listeners
 
 flipBtn.addEventListener('click', handleClick) // event listener for Flip button
-document.getElementById('rstBtn').addEventListener('click', refresh)
+newGameBtn.addEventListener('click', refresh)
 card.addEventListener('click', coveredCards) // event listener to call the turn() function, which calls the handleClick functions
 rstStock.addEventListener('click', stockReset)
 stockEl.addEventListener('click', turn)
@@ -392,21 +393,15 @@ function clearCards() {
     stock.splice(iteration - 1, 1)
     wasteEl.classList.add(waste[iteration - 2])
     cardTwoEl.classList = 'card small outline'
-    console.log(stock)
-    console.log(waste)
   } else if (cardOneEl.id !== 'stock' && cardOneEl.id !== 'waste' && cardTwoEl.id === 'waste') { //if card 1 is from the pyramid and card 2 is from the waste deck
     wasteEl.classList.remove('outline')
+    wasteEl.classList.remove(waste[iteration - 1])
     waste.pop()
     stock.splice(iteration - 1, 1)
-    //filler to show next card in stock array in the stock deck
+    wasteEl.classList.add(waste[iteration - 2])
     cardOneEl.classList = 'card small outline'
   } else if ((cardOneEl.id === 'stock' || cardOneEl.id === 'waste') && (cardTwoEl.id === 'stock' || cardTwoEl.id === 'waste')) { //if both cards are from stock or waste deck
-    stockEl.classList.remove('outline')
-    wasteEl.classList.remove('outline')
-    stock.splice(iteration, 1)
-    //filler to show next card in stock array in the stock deck
-    waste.pop()
-    stock.splice(iteration - 1, 1)
+    return
   } else {                                        //if both cards are from the pyramid
     cardOneEl.classList = 'card small outline'
     cardTwoEl.classList = 'card small outline'
