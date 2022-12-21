@@ -1,11 +1,15 @@
 body {
-  background-color: #696969;
+  background-image: url("../christmas-background-1.webp");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 50vmax;
-  margin-top: 200px;
+  margin-top: 10px;
 }
 
 .container {
@@ -106,19 +110,31 @@ body {
 }
 
 #message {
-  color: whitesmoke;
+  font-size: 40px;
+}
+
+#message, .tracker {
+  font-family: 'Mountains of Christmas', cursive;
+  color: gold;
+}
+
+#xmas-star {
+  height: 100px;
+  width: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .btn {
   margin: 5px;
   color: white;
-  background-color: #202d7a;
+  background-color: #D6001C;
   font-weight: bold;
-  border: 2px solid #202d7a;
+  border: 2px solid #D6001C;
 }
 
 .tracker {
   display: flex;
   gap: 10px;
-  color: whitesmoke;
 }
