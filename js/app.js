@@ -24,6 +24,7 @@ let stockRstCount = document.getElementById('stock-count')
 let messageEl = document.getElementById('message')
 let flipBtn = document.getElementById('flipBtn')
 let rstStock = document.getElementById('rstStock')
+let container = document.getElementById('container')
 
       // Cached Elements for Each Card in the Pyramid
 let card0El = document.getElementById('p0')
@@ -61,6 +62,8 @@ flipBtn.addEventListener('click', handleClick) // event listener for Flip button
 document.getElementById('rstBtn').addEventListener('click', refresh)
 card.addEventListener('click', coveredCards) // event listener to call the turn() function, which calls the handleClick functions
 rstStock.addEventListener('click', stockReset)
+stockEl.addEventListener('click', turn)
+wasteEl.addEventListener('click', turn)
 
 // Functions
 
@@ -262,8 +265,14 @@ function stockReset() {
 
 //Function to handle clicking on your first card
 function handleClickOne(evt) {
+  let cardIdx
+  let stringVal
   //sets cardIdx to the card type based on the class
-  let cardIdx = evt.target.classList.value.substring(12)
+  if (evt.target.classList.contains('shadow')) {
+    cardIdx = evt.target.classList.value.substring(19)
+  } else {
+    cardIdx = evt.target.classList.value.substring(12)
+  }
   //if else statements determining what numeric value to assign the card picked
   if (cardIdx === 'A') cardOneVal = 1 
   else if (cardIdx === '10') cardOneVal = 10
@@ -272,8 +281,11 @@ function handleClickOne(evt) {
   //if the card is a King, run the isKing() function to clear that card and start over on 1st card choice
   else if (cardIdx === 'K') {
     isKing()
+  } else if (cardIdx.length === 2 && evt.target.classList.contains('shadow')) { 
+    stringVal = evt.target.classList.value.substring(20)
+    cardOneVal = parseInt(stringVal, 10)
   } else if (parseInt(cardIdx, 10) < 10) {
-    let stringVal = evt.target.classList.value.substring(13)
+    stringVal = evt.target.classList.value.substring(13)
     cardOneVal = parseInt(stringVal, 10)
   }
   else {
@@ -285,16 +297,25 @@ function handleClickOne(evt) {
 
 //Function to handle clicking on your second card
 function handleClickTwo(evt) {
+  let cardIdx
+  let stringVal
   //sets cardIdx to the card type based on the class
-  let cardIdx = evt.target.classList.value.substring(12)
+  if (evt.target.classList.contains('shadow')) {
+    cardIdx = evt.target.classList.value.substring(19)
+  } else {
+    cardIdx = evt.target.classList.value.substring(12)
+  }
   //if else statements determining what numeric value to assign the card picked
   if (cardIdx === 'A') cardTwoVal = 1 
   else if (cardIdx === '10') cardTwoVal = 10
   else if (cardIdx === 'J') cardTwoVal = 11
   else if (cardIdx === 'Q') cardTwoVal = 12
   else if (cardIdx === 'K') cardTwoVal = 13
-  else if (parseInt(cardIdx, 10) < 10) {
-    let stringVal = evt.target.classList.value.substring(13)
+  else if (cardIdx.length === 2 && evt.target.classList.contains('shadow')) { 
+    stringVal = evt.target.classList.value.substring(20)
+    cardTwoVal = parseInt(stringVal, 10)
+  } else if (parseInt(cardIdx, 10) < 10) {
+    stringVal = evt.target.classList.value.substring(13)
     cardTwoVal = parseInt(stringVal, 10)
   }
   else {
