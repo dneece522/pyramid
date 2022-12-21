@@ -235,6 +235,7 @@ function handleClick() {
       flipBtn.setAttribute('disabled', '')
       rstStock.removeAttribute('disabled')
     } else {
+      stockEl.classList.add('outline')
       noMoreMoves = true
       flipBtn.setAttribute('disabled', '')
       updateMessage()
@@ -342,8 +343,11 @@ function checkForWinner(card1, card2) {
   } else {
     return
   }
-  if () {
-
+  if (card0El.classList.contains('outline')) {
+    winner = true
+    flipBtn.setAttribute('disabled', '')
+    rstStock.setAttribute('disabled', '')
+    updateMessage()
   }
   //this resets the card values to 0 after being checked, otherwise it could have lingering affects if new card1 equals 13 with old card2
   cardOneVal = 0
@@ -360,7 +364,7 @@ function clearCards() {
 function updateMessage() {
   if (winner === false && noMoreMoves === false) {
     messageEl.textContent = `Choose Your ${cardTurn === 1 ? "First" : "Second"} Card`
-  } else if (winner === true && noMoreMoves === false) {
+  } else if (winner === true) {
     messageEl.textContent = "Congratulations! You Win!"
   } else if (winner === false && noMoreMoves === true) {
     messageEl.textContent = "Sorry, you're all out of moves!"
