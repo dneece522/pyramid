@@ -358,8 +358,41 @@ function checkForWinner(card1, card2) {
 
 // clearCards() function clears the cards if they add up to 13
 function clearCards() {
-  cardOneEl.classList = 'card small outline'
-  cardTwoEl.classList = 'card small outline'
+  if (cardOneEl.id === 'stock' && cardTwoEl.id !== 'stock' && cardTwoEl.id !== 'waste') { //if card 1 is from the stock deck and card 2 is from the pyramid
+    stockEl.classList.remove('outline')
+    stock.splice(iteration, 1)
+    //filler to show next card in stock array in the stock deck
+    cardTwoEl.classList = 'card small outline'
+  } else if (cardOneEl.id !== 'stock' && cardOneEl.id !== 'waste' && cardTwoEl.id === 'stock') { //if card 1 is from the pyramid and card 2 is from the stock deck
+    stockEl.classList.remove('outline')
+    stock.splice(iteration, 1)
+    //filler to show next card in stock array in the stock deck
+    cardOneEl.classList = 'card small outline'
+  } else if (cardOneEl.id === 'waste' && cardTwoEl.id !== 'stock' && cardTwoEl.id !== 'waste') { //if card 1 is from the waste deck and card 2 is from the pyramid
+    wasteEl.classList.remove('outline')
+    waste.pop()
+    stock.splice(iteration - 1, 1)
+    //filler to show next card in stock array in the stock deck
+    cardTwoEl.classList = 'card small outline'
+  } else if (cardOneEl.id !== 'stock' && cardOneEl.id !== 'waste' && cardTwoEl.id === 'waste') { //if card 1 is from the pyramid and card 2 is from the waste deck
+    wasteEl.classList.remove('outline')
+    waste.pop()
+    stock.splice(iteration - 1, 1)
+    //filler to show next card in stock array in the stock deck
+    cardOneEl.classList = 'card small outline'
+  } else if ((cardOneEl.id === 'stock' || cardOneEl.id === 'waste') && (cardTwoEl.id === 'stock' || cardTwoEl.id === 'waste')) { //if both cards are from stock or waste deck
+    stockEl.classList.remove('outline')
+    wasteEl.classList.remove('outline')
+    stock.splice(iteration, 1)
+    //filler to show next card in stock array in the stock deck
+    waste.pop()
+    stock.splice(iteration - 1, 1)
+    console.log(stock)
+    console.log(waste)
+  } else {                                        //if both cards are from the pyramid
+    cardOneEl.classList = 'card small outline'
+    cardTwoEl.classList = 'card small outline'
+  }
 }
 
 // renders the state of the game through on-screen messages
@@ -374,3 +407,5 @@ function updateMessage() {
     return
   }
 }
+
+console.log(stock)
