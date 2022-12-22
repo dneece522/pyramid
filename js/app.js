@@ -212,56 +212,53 @@ function handleClick() {
   let cardPicked = stock[iteration]          //set cardPicked equal to the current card shown in the stock pile (array)
   stockEl.classList.remove(stock[iteration]) //remove that same card being shown on the screen from the stock pile
   iteration++                                //add 1 to the iteration count
-  if (iteration < stock.length) {
-    stockEl.classList.add(stock[iteration])
+  if (iteration < stock.length) {            //if the length of the stock array is greater than the iteration count
+    stockEl.classList.add(stock[iteration])  //then add the current index (iteration) of the stock array to the stockEl class list (render on screen)
   } else {
-    if (resetCount > 0) {
-      stockEl.classList.add('outline')
+    if (resetCount > 0) {                    //while resetCount is greater than 0, but iteration is equal to stock.length, add an outline to the stock deck, set iteration
+      stockEl.classList.add('outline')       //back to 0, render a message saying you can press the Reset Stock button, lock flip card button and unlock reset stock button
       iteration = 0
       messageEl.textContent = "The Stock Deck is Empty, Press the 'Reset Stock' Button"
       flipBtn.setAttribute('disabled', '')
       rstStock.removeAttribute('disabled')
     } else {
-      stockEl.classList.add('outline')
-      noMoreMoves = true
+      stockEl.classList.add('outline')       //if resetCount = 0 (no more stock resets), add outline to stock deck, set noMoreMoves = true, disable flip card button,
+      noMoreMoves = true                     //and call updateMessage()
       flipBtn.setAttribute('disabled', '')
       updateMessage()
     }
   }
-  // Add card picked to waste deck
+  // Add cardPicked to waste deck
   waste.push(cardPicked)
-  // Pass card picked to render function to display
+  // Pass cardPicked to render function to display
   renderDeck(cardPicked)
 }
 
+// This is called when user clicks the Reset Stock button
 function stockReset() {
-  stock = waste
-  waste = []
-  wasteEl.classList = 'card small outline'
-  stockEl.classList.remove('outline')
-  //stockEl.classList.add('shadow')
-  stockEl.classList.add(stock[0])
-  resetCount--
-  stockRstCount.textContent = resetCount.toString()
-  flipBtn.removeAttribute('disabled')
-  rstStock.setAttribute('disabled', '')
+  stock = waste                                     //set the stock array equal to the waste array 
+  waste = []                                        //clear the waste array
+  wasteEl.classList = 'card small outline'          //set the waste deck to a card outline
+  stockEl.classList.remove('outline')               //remove outline from stock deck
+  stockEl.classList.add(stock[0])                   //add the first card in the stock array to the stock class list
+  resetCount--                                      //subtract 1 from the resetCount
+  stockRstCount.textContent = resetCount.toString() //diplay the resetCount value on the screen in the form of a string
+  flipBtn.removeAttribute('disabled')               //unlock the Flip Card button
+  rstStock.setAttribute('disabled', '')             //lock the Reset Stock button
 }
 
 //Function to handle clicking on your first card
 function handleClickOne(evt) {
-  let cardIdx
-  let stringVal
-  //sets cardIdx to the card type based on the class
-  cardIdx = evt.target.classList.value.substring(12)
-  //if else statements determining what numeric value to assign the card picked
-  if (cardIdx === 'A') cardOneVal = 1 
-  else if (cardIdx === '10') cardOneVal = 10
-  else if (cardIdx === 'J') cardOneVal = 11
-  else if (cardIdx === 'Q') cardOneVal = 12
-  //if the card is a King, run the isKing() function to clear that card and start over on 1st card choice
-  else if (cardIdx === 'K') {
+  let cardIdx    
+  let stringVal 
+  cardIdx = evt.target.classList.value.substring(12) //removes the first 12 characters of the class list string from the first card clicked
+  if (cardIdx === 'A') cardOneVal = 1                //if the remaining character is an 'A' (ace), set cardOneVal = 1
+  else if (cardIdx === '10') cardOneVal = 10         //if the remaining character(s) is a '10', set cardOneVal = 10
+  else if (cardIdx === 'J') cardOneVal = 11          //if the remaining character is a 'J', set cardOneVal = 11
+  else if (cardIdx === 'Q') cardOneVal = 12          //if the remaining character is a 'Q', set cardOneVal = 12
+  else if (cardIdx === 'K') {                        //if the card is a King, run the isKing() function to clear that card and start over on 1st card choice
     isKing()
-  } else if (parseInt(cardIdx, 10) < 10) {
+  } else if (parseInt(cardIdx, 10) < 10) {           //if the character is a '02' through '09', remove the 0 and set cardOneVal to its respected number 
     stringVal = evt.target.classList.value.substring(13)
     cardOneVal = parseInt(stringVal, 10)
   }
@@ -276,15 +273,14 @@ function handleClickOne(evt) {
 function handleClickTwo(evt) {
   let cardIdx
   let stringVal
-  //sets cardIdx to the card type based on the class
-  cardIdx = evt.target.classList.value.substring(12)
-  //if else statements determining what numeric value to assign the card picked
+  cardIdx = evt.target.classList.value.substring(12) //removes the first 12 characters of the class list string from the second card clicked
+  //if else statements determining what numeric value to assign the card picked, same as handleClickOne()
   if (cardIdx === 'A') cardTwoVal = 1 
   else if (cardIdx === '10') cardTwoVal = 10
   else if (cardIdx === 'J') cardTwoVal = 11
   else if (cardIdx === 'Q') cardTwoVal = 12
-  else if (cardIdx === 'K') cardTwoVal = 13
-  else if (parseInt(cardIdx, 10) < 10) {
+  else if (cardIdx === 'K') cardTwoVal = 13  //no isKing() function here, you can only clear a King on the first click
+  else if (parseInt(cardIdx, 10) < 10) {     //same as handleClickOne()
     stringVal = evt.target.classList.value.substring(13)
     cardTwoVal = parseInt(stringVal, 10)
   }
@@ -305,6 +301,7 @@ function renderDeck(cardPicked) {
   if (waste.length > 1) {
     wasteEl.classList.remove(cardToRemove)
   }
+  // if waste.length becomes 1 element away from stock.length, set the stock to an outline
   if (stock.length === waste.length - 1) {
     stockEl.classList === 'card small outline'
   }
@@ -314,40 +311,46 @@ function renderDeck(cardPicked) {
   wasteEl.classList.add(cardPicked)
 }
 
+//The way the stock and waste array works: The stock array begins with 24 cards (elements) leftover from the pyramid array, and the waste array starts empty [].
+//Every time the flip card button is clicked, iteration goes up by one (iteration++), and that iterates through the stock array to access each card when the button is clicked.
+//When the button is clicked, the card previously displayed on top of the stock deck is pushed into the waste array. So as the user iterates through the stock array, they are
+//aslo adding each element to the waste array. So when a card is cleared from the stock deck, it must be deleted from the stock array, but when a card is cleared from the
+//waste deck, that element has to be deleted from the waste array and also the stock array. That's what I'm doing in the isKing() and clearCards() functions.
+
 // Function to clear a King card and go back to first card choice
 function isKing() {
-  if (cardOneEl.id === 'stock') {
-    cardTurn = 1
-    stockEl.classList.remove('outline')
-    stockEl.classList.remove(stock[iteration])
-    stock.splice(iteration, 1)
-    stockEl.classList.add(stock[iteration])
-  } else if (cardOneEl.id === 'waste') {
-    cardTurn = 1
-    wasteEl.classList.remove('outline')
-    wasteEl.classList.remove(waste[iteration - 1])
-    waste.pop()
-    stock.splice(iteration - 1, 1)
-    wasteEl.classList.add(waste[iteration - 2])
+  if (cardOneEl.id === 'stock') {                 //if card one is a King from the stock pile...
+    cardTurn = 1                                  //set the cardTurn back to 1
+    stockEl.classList.remove('outline')           //remove an outline class if there is one
+    stockEl.classList.remove(stock[iteration])    //remove the current card class from the class list
+    stock.splice(iteration, 1)                    //remove the above card class from the stock array
+    stockEl.classList.add(stock[iteration])       //add the new card clas from the array (next element in the array since the previous one was just spliced out)
+  } else if (cardOneEl.id === 'waste') {          //if card one is a King from the waste pile...
+    cardTurn = 1                                  //set the cardTurn back to 1
+    wasteEl.classList.remove('outline')           //remove an outline class if there is one
+    wasteEl.classList.remove(waste[iteration - 1])//remove the current card class from the class list (one step behind from stock array)
+    waste.pop()                                   //remove last element from waste array, which is the card at the top of the deck that was just cleared
+    stock.splice(iteration - 1, 1)                //remove element from stock array that was previously at the top of stock (but then was cleared from top of waste)
+    wasteEl.classList.add(waste[iteration - 2])   //add new card element to the top that was below previous card
   } else {
     cardTurn = 1
-    cardOneEl.classList = 'card small outline'
+    cardOneEl.classList = 'card small outline'    //if from the pyramid, just remove the card and add an outline
   }
 }
 
 // Function checks to see if cards add up to 13 and if the board is cleared
 function checkForWinner(card1, card2) {
   cardSum = card1 + card2
-  if (cardSum === 13) {
+  if (cardSum === 13) {    //This is all pretty straight forward, checks to see if the 2 cards clicked are eligible to be cleared
     clearCards()
   } else {
     return
   }
-  if (card0El.classList.contains('outline')) {
-    winner = true
-    flipBtn.setAttribute('disabled', '')
+  if (card0El.classList.contains('outline')) { //Here's the winning condition, if the top card in the pyramid (card0El) contains an outline class (has been cleared), then
+    winner = true                              //winner is set to true
+    flipBtn.setAttribute('disabled', '')       //Flip Card and Reset Stock buttons are disabled
     rstStock.setAttribute('disabled', '')
-    updateMessage()
+    updateMessage()                            //call updateMessage()
   }
   //this resets the card values to 0 after being checked, otherwise it could have lingering affects if new card1 equals 13 with old card2
   cardOneVal = 0
@@ -357,34 +360,34 @@ function checkForWinner(card1, card2) {
 // clearCards() function clears the cards if they add up to 13
 function clearCards() {
   if (cardOneEl.id === 'stock' && cardTwoEl.id !== 'stock' && cardTwoEl.id !== 'waste') { //if card 1 is from the stock deck and card 2 is from the pyramid
-    stockEl.classList.remove('outline')
-    stockEl.classList.remove(stock[iteration])
-    stock.splice(iteration, 1)
-    stockEl.classList.add(stock[iteration])
-    cardTwoEl.classList = 'card small outline'
+    stockEl.classList.remove('outline')        //remove outline if there is one
+    stockEl.classList.remove(stock[iteration]) //remove old card value that was being displayed at the top of the deck
+    stock.splice(iteration, 1)                 //remove element that was cleared from stock array
+    stockEl.classList.add(stock[iteration])    //add next element in line to be displayed
+    cardTwoEl.classList = 'card small outline' //this clears the card from the pyramid
   } else if (cardOneEl.id !== 'stock' && cardOneEl.id !== 'waste' && cardTwoEl.id === 'stock') { //if card 1 is from the pyramid and card 2 is from the stock deck
     stockEl.classList.remove('outline')
     stockEl.classList.remove(stock[iteration])
     stock.splice(iteration, 1)
     stockEl.classList.add(stock[iteration])
-    cardOneEl.classList = 'card small outline'
+    cardOneEl.classList = 'card small outline' //same as above, but clears cardOne from the pyramid
   } else if (cardOneEl.id === 'waste' && cardTwoEl.id !== 'stock' && cardTwoEl.id !== 'waste') { //if card 1 is from the waste deck and card 2 is from the pyramid
-    wasteEl.classList.remove('outline')
-    wasteEl.classList.remove(waste[iteration - 1])
-    waste.pop()
-    stock.splice(iteration - 1, 1)
-    wasteEl.classList.add(waste[iteration - 2])
-    cardTwoEl.classList = 'card small outline'
+    wasteEl.classList.remove('outline')            //remove outline if there is one
+    wasteEl.classList.remove(waste[iteration - 1]) //remove the card cleared from the top of waste deck (one step behind stock array)
+    waste.pop()                                    //remove the card cleared from the waste array
+    stock.splice(iteration - 1, 1)                 //splice the card cleared from the stock array (-1 becasue that's the spot it was previously at)
+    wasteEl.classList.add(waste[iteration - 2])    //add new card element to the top of waste that was below previous card
+    cardTwoEl.classList = 'card small outline'     //this clears the card from the pyramid
   } else if (cardOneEl.id !== 'stock' && cardOneEl.id !== 'waste' && cardTwoEl.id === 'waste') { //if card 1 is from the pyramid and card 2 is from the waste deck
     wasteEl.classList.remove('outline')
     wasteEl.classList.remove(waste[iteration - 1])
     waste.pop()
     stock.splice(iteration - 1, 1)
     wasteEl.classList.add(waste[iteration - 2])
-    cardOneEl.classList = 'card small outline'
+    cardOneEl.classList = 'card small outline'     //same as above, but clears cardOne from the pyramid
   } else if ((cardOneEl.id === 'stock' || cardOneEl.id === 'waste') && (cardTwoEl.id === 'stock' || cardTwoEl.id === 'waste')) { //if both cards are from stock or waste deck
-    return
-  } else {                                        //if both cards are from the pyramid
+    return //tried to make it functional to clear one card from the stock and the other from waste, but wouldn't work. And has no effect in actual gameplay
+  } else {  //if both cards are from the pyramid, clear them both
     cardOneEl.classList = 'card small outline'
     cardTwoEl.classList = 'card small outline'
   }
@@ -392,7 +395,7 @@ function clearCards() {
   console.log(waste)
 }
 
-// renders the state of the game through on-screen messages
+// renders the state of the game through on-screen messages, self-explanatory
 function updateMessage() {
   if (winner === false && noMoreMoves === false) {
     messageEl.textContent = `Choose Your ${cardTurn === 1 ? "First" : "Second"} Card`
