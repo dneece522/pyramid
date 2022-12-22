@@ -301,8 +301,8 @@ function renderDeck(cardPicked) {
   if (waste.length > 1) {
     wasteEl.classList.remove(cardToRemove)
   }
-  // if waste.length becomes 1 element away from stock.length, set the stock to an outline
-  if (stock.length === waste.length - 1) {
+  // if waste.length becomes 1 element away from stock.length, or equal to stock.length, set the stock to an outline
+  if (stock.length === waste.length - 1 || stock.length === waste.length) {
     stockEl.classList === 'card small outline'
   }
   // Set card to be removed on next click
