@@ -22,12 +22,13 @@ let wasteEl = document.getElementById('waste')             //variable to access 
 let card = document.getElementById('pyramid')              //variable to click a card in the pyramid
 let stockRstCount = document.getElementById('stock-count') //used to render the amount of stock resets remaining
 let messageEl = document.getElementById('message')         //used to render messages on the screen
-let flipBtn = document.getElementById('flip-btn')           //button used to flip cards from the stock to waste pile
-let rstStock = document.getElementById('rst-stock')         //button used to reset the stock when it reaches the end
+let flipBtn = document.getElementById('flip-btn')          //button used to flip cards from the stock to waste pile
+let rstStock = document.getElementById('rst-stock')        //button used to reset the stock when it reaches the end
 let container = document.getElementById('container')       //used to listen if either the stock or waste pile is clicked
-let newGameBtn = document.getElementById('rst-btn')         //button used to reset the game
+let newGameBtn = document.getElementById('rst-btn')        //button used to reset the game
+let jingleBells = new Audio('../assets/jingle-bells.mp3')  //plays jingle bell sound when cards clear
 
-      // Cached Elements for Each Card in the Pyramid
+// Cached Elements for Each Card in the Pyramid
 let card0El = document.getElementById('p0')
 let card1El = document.getElementById('p1')
 let card2El = document.getElementById('p2')
@@ -56,7 +57,7 @@ let card24El = document.getElementById('p24')
 let card25El = document.getElementById('p25')
 let card26El = document.getElementById('p26')
 let card27El = document.getElementById('p27')
-      //array to hold each card element in the pyramid, used to set the board using a loop
+//array to hold each card element in the pyramid, used to set the board using a loop
 let cachedCardsArray = [card0El, card1El, card2El, card3El, card4El, card5El, card6El, card7El, card8El, card9El, card10El, card11El, card12El, card13El, card14El, card15El,card16El, card17El, card18El, card19El, card20El, card21El, card22El, card23El, card24El, card25El, card26El, card27El]
 
 // Event listeners
@@ -316,6 +317,8 @@ function isKing() {
     cardTurn = 1
     cardOneEl.classList = 'card small outline'    //if from the pyramid, just remove the card and add an outline
   }
+  jingleBells.volume = .25
+  jingleBells.play()
 }
 
 // Function checks to see if cards add up to 13 and if the board is cleared
@@ -375,6 +378,8 @@ function clearCards() {
     cardOneEl.classList = 'card small outline'
     cardTwoEl.classList = 'card small outline'
   }
+  jingleBells.volume = .25
+  jingleBells.play()
   console.log("Stock array clear cards:", stock)
   console.log("Waste array clear cards:", waste)
   console.log("Current stock value:", stock[iteration])
