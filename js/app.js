@@ -187,9 +187,9 @@ function coveredCards(evt) {
   } else if (evt.target.id === 'p0') {                                                                // Row 0 starts here
     if (card1El.classList.contains('outline') && card2El.classList.contains('outline')) turn(evt)
       else messageEl.textContent = `This Card is Covered Up, Choose New ${cardTurn === 1 ? 'First' : 'Second'} Card`
-  } else {
-    turn(evt)
-  }
+  } else if (evt.target.classList.contains('rows')) {
+    return
+  } else turn(evt)
 }
 
 //Switches turns between choosing the first card and second card
