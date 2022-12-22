@@ -93,6 +93,10 @@ body {
 
 /* PYRAMID STYLING ABOVE */
 
+.card:hover {
+  border: 2px solid gold;
+}
+
 .card {
   margin: 3vh;
 }
