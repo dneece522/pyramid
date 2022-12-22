@@ -246,6 +246,7 @@ function stockReset() {
   stockRstCount.textContent = resetCount.toString() //diplay the resetCount value on the screen in the form of a string
   flipBtn.removeAttribute('disabled')               //unlock the Flip Card button
   rstStock.setAttribute('disabled', '')             //lock the Reset Stock button
+  updateMessage()
 }
 
 //Function to handle clicking on your first card
