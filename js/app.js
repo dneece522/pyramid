@@ -22,10 +22,10 @@ let wasteEl = document.getElementById('waste')             //variable to access 
 let card = document.getElementById('pyramid')              //variable to click a card in the pyramid
 let stockRstCount = document.getElementById('stock-count') //used to render the amount of stock resets remaining
 let messageEl = document.getElementById('message')         //used to render messages on the screen
-let flipBtn = document.getElementById('flipBtn')           //button used to flip cards from the stock to waste pile
-let rstStock = document.getElementById('rstStock')         //button used to reset the stock when it reaches the end
+let flipBtn = document.getElementById('flip-btn')           //button used to flip cards from the stock to waste pile
+let rstStock = document.getElementById('rst-stock')         //button used to reset the stock when it reaches the end
 let container = document.getElementById('container')       //used to listen if either the stock or waste pile is clicked
-let newGameBtn = document.getElementById('rstBtn')         //button used to reset the game
+let newGameBtn = document.getElementById('rst-btn')         //button used to reset the game
 
       // Cached Elements for Each Card in the Pyramid
 let card0El = document.getElementById('p0')
@@ -365,12 +365,16 @@ function clearCards() {
     stock.splice(iteration, 1)                 //remove element that was cleared from stock array
     stockEl.classList.add(stock[iteration])    //add next element in line to be displayed
     cardTwoEl.classList = 'card small outline' //this clears the card from the pyramid
+    console.log("Stock card class list for card1 and card2 from pyramid:", stockEl.classList)
+    console.log("Waste card class list for card1 from stock and card2 from pyramid:", wasteEl.classList)
   } else if (cardOneEl.id !== 'stock' && cardOneEl.id !== 'waste' && cardTwoEl.id === 'stock') { //if card 1 is from the pyramid and card 2 is from the stock deck
     stockEl.classList.remove('outline')
     stockEl.classList.remove(stock[iteration])
     stock.splice(iteration, 1)
     stockEl.classList.add(stock[iteration])
     cardOneEl.classList = 'card small outline' //same as above, but clears cardOne from the pyramid
+    console.log("Stock card class list for card2 and card1 from pyramid:", stockEl.classList)
+    console.log("Waste card class list for card2 from stock and card1 from pyramid:", wasteEl.classList)
   } else if (cardOneEl.id === 'waste' && cardTwoEl.id !== 'stock' && cardTwoEl.id !== 'waste') { //if card 1 is from the waste deck and card 2 is from the pyramid
     wasteEl.classList.remove('outline')            //remove outline if there is one
     wasteEl.classList.remove(waste[iteration - 1]) //remove the card cleared from the top of waste deck (one step behind stock array)
@@ -378,6 +382,8 @@ function clearCards() {
     stock.splice(iteration - 1, 1)                 //splice the card cleared from the stock array (-1 becasue that's the spot it was previously at)
     wasteEl.classList.add(waste[iteration - 2])    //add new card element to the top of waste that was below previous card
     cardTwoEl.classList = 'card small outline'     //this clears the card from the pyramid
+    console.log("Waste card class list for card1 and card2 from pyramid:", wasteEl.classList)
+    console.log("Stock card class list for card1 from waste and card2 from pyramid:", stockEl.classList)
   } else if (cardOneEl.id !== 'stock' && cardOneEl.id !== 'waste' && cardTwoEl.id === 'waste') { //if card 1 is from the pyramid and card 2 is from the waste deck
     wasteEl.classList.remove('outline')
     wasteEl.classList.remove(waste[iteration - 1])
@@ -385,14 +391,19 @@ function clearCards() {
     stock.splice(iteration - 1, 1)
     wasteEl.classList.add(waste[iteration - 2])
     cardOneEl.classList = 'card small outline'     //same as above, but clears cardOne from the pyramid
+    console.log("Waste card class list for card2 and card1 from pyramid:", wasteEl.classList)
+    console.log("Stock card class list for card2 from waste and card1 from pyramid:", stockEl.classList)
   } else if ((cardOneEl.id === 'stock' || cardOneEl.id === 'waste') && (cardTwoEl.id === 'stock' || cardTwoEl.id === 'waste')) { //if both cards are from stock or waste deck
     return //tried to make it functional to clear one card from the stock and the other from waste, but wouldn't work. And has no effect in actual gameplay
   } else {  //if both cards are from the pyramid, clear them both
     cardOneEl.classList = 'card small outline'
     cardTwoEl.classList = 'card small outline'
   }
-  console.log(stock)
-  console.log(waste)
+  console.log("Stock array:", stock)
+  console.log("Waste array:", waste)
+  console.log("Current stock value:", stock[iteration])
+  console.log("Current waste value:", waste[iteration - 1])
+  console.log("iteration count:", iteration)
 }
 
 // renders the state of the game through on-screen messages, self-explanatory
@@ -408,4 +419,4 @@ function updateMessage() {
   }
 }
 
-console.log(stock)
+// console.log(stock)
