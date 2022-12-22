@@ -13,7 +13,6 @@ let noMoreMoves  // if we've gone through the stock deck 3 times, noMoreMoves = 
 let cardTurn     // if this equals 1, then a click picks the first card, if it equals -1, a click picks the second card
 let cardToRemove // used in the renderDeck function to hold the value of the card previously on the waste deck
 let iteration    // used throughout the program to keep count of how many times the user has gone through the stock deck
-let count
 let resetCount   // keeps track of how many times the stock deck has been reset
 
 // Cached element references
@@ -88,7 +87,6 @@ function init() {
   noMoreMoves = false
   cardTurn = 1
   iteration = 0
-  count = iteration
   resetCount = 2
   stockRstCount.textContent = '2' // renders the number of stock resets left for the user
   rstStock.setAttribute('disabled', '') // disables the Reset Stock button until the user has gone all the way through the stock pile
@@ -116,11 +114,11 @@ function pyramidRender() {
     pyramid.push(cardGone)
   }
   //displays the first card in the stock array on the stock pile (iteration = 0)
-  stockEl.classList.add(stock[iteration])
+  stockEl.classList = `card small ${stock[iteration]}`
 
   // For loop to add shuffled cards into the Pyramid
   for (let i = 0; i < cachedCardsArray.length; i++) {
-    cachedCardsArray[i].classList.add(pyramid[i])
+    cachedCardsArray[i].classList = `card small ${pyramid[i]}`
   }
 }
 
@@ -212,22 +210,19 @@ function turn(evt) {
 // Function to handle the Flip Card button click:
 function handleClick() {
   let cardPicked = stock[iteration]          //set cardPicked equal to the current card shown in the stock pile (array)
-  stockEl.classList.remove(stock[iteration]) //remove that same card being shown on the screen from the stock pile
   iteration++                                //add 1 to the iteration count
-  waste.length === 0 ? count = 0 : count++
   if (iteration < stock.length) {            //if the length of the stock array is greater than the iteration count
-    stockEl.classList.add(stock[iteration])  //then add the current index (iteration) of the stock array to the stockEl class list (render on screen)
+    stockEl.classList = `card small ${stock[iteration]}`
   } else {
     if (resetCount > 0) {                    //while resetCount is greater than 0, but iteration is equal to stock.length, add an outline to the stock deck, set iteration
-      stockEl.classList.add('outline')       //back to 0, render a message saying you can press the Reset Stock button, lock flip card button and unlock reset stock button
+      stockEl.classList = 'card small outline'
       iteration = 0
-      count = 0
       messageEl.textContent = "The Stock Deck is Empty, Press the 'Reset Stock' Button"
       flipBtn.setAttribute('disabled', '')
       rstStock.removeAttribute('disabled')
     } else {
-      stockEl.classList.add('outline')       //if resetCount = 0 (no more stock resets), add outline to stock deck, set noMoreMoves = true, disable flip card button,
-      noMoreMoves = true                     //and call updateMessage()
+      stockEl.classList = 'card small outline'
+      noMoreMoves = true
       flipBtn.setAttribute('disabled', '')
       updateMessage()
     }
@@ -235,7 +230,10 @@ function handleClick() {
   // Add cardPicked to waste deck
   waste.push(cardPicked)
   // Pass cardPicked to render function to display
-  renderDeck(cardPicked)
+  wasteEl.classList = `card small ${cardPicked}`
+
+  console.log("Stock array:", stock)
+  console.log("Waste array:", waste)
 }
 
 // This is called when user clicks the Reset Stock button
@@ -243,8 +241,7 @@ function stockReset() {
   stock = waste                                     //set the stock array equal to the waste array 
   waste = []                                        //clear the waste array
   wasteEl.classList = 'card small outline'          //set the waste deck to a card outline
-  stockEl.classList.remove('outline')               //remove outline from stock deck
-  stockEl.classList.add(stock[0])                   //add the first card in the stock array to the stock class list
+  stockEl.classList = `card small ${stock[0]}`      //add the first card in the stock array to the stock class list
   resetCount--                                      //subtract 1 from the resetCount
   stockRstCount.textContent = resetCount.toString() //diplay the resetCount value on the screen in the form of a string
   flipBtn.removeAttribute('disabled')               //unlock the Flip Card button
@@ -295,26 +292,6 @@ function handleClickTwo(evt) {
   return cardTwoVal
 }
 
-// Function to render deck state
-function renderDeck(cardPicked) {
-	// Remove outline class when first card is picked
-  if (waste.length === 1) {
-    wasteEl.classList.remove('outline')
-  }
-  // Removes previous picked card from waste deck class list
-  if (waste.length > 1) {
-    wasteEl.classList.remove(cardToRemove)
-  }
-  // if waste.length becomes 1 element away from stock.length, or equal to stock.length, set the stock to an outline
-  if (stock.length === waste.length - 1 || stock.length === waste.length) {
-    stockEl.classList === 'card small outline'
-  }
-  // Set card to be removed on next click
-  cardToRemove = cardPicked
-  // Add current card picked to waste deck element
-  wasteEl.classList.add(cardPicked)
-}
-
 //The way the stock and waste array works: The stock array begins with 24 cards (elements) leftover from the pyramid array, and the waste array starts empty [].
 //Every time the flip card button is clicked, iteration goes up by one (iteration++), and that iterates through the stock array to access each card when the button is clicked.
 //When the button is clicked, the card previously displayed on top of the stock deck is pushed into the waste array. So as the user iterates through the stock array, they are
@@ -325,18 +302,15 @@ function renderDeck(cardPicked) {
 function isKing() {
   if (cardOneEl.id === 'stock') {                 //if card one is a King from the stock pile...
     cardTurn = 1                                  //set the cardTurn back to 1
-    stockEl.classList.remove('outline')           //remove an outline class if there is one
-    stockEl.classList.remove(stock[iteration])    //remove the current card class from the class list
     stock.splice(iteration, 1)                    //remove the above card class from the stock array
-    stockEl.classList.add(stock[iteration])       //add the new card clas from the array (next element in the array since the previous one was just spliced out)
+    stockEl.classList = `card small ${stock[iteration]}`       //add the new card clas from the array (next element in the array since the previous one was just spliced out)
   } else if (cardOneEl.id === 'waste') {          //if card one is a King from the waste pile...
     cardTurn = 1                                  //set the cardTurn back to 1
-    waste.length === 0 ? wasteEl.classList.add('outline') : count--
-    wasteEl.classList.remove('outline')           //remove an outline class if there is one
-    wasteEl.classList.remove(waste[count])        //remove the current card class from the class list (one step behind from stock array)
     waste.pop()                                   //remove last element from waste array, which is the card at the top of the deck that was just cleared
-    stock.splice(iteration - 1, 1)                //remove element from stock array that was previously at the top of stock (but then was cleared from top of waste)
-    wasteEl.classList.add(waste[count - 1])       //add new card element to the top that was below previous card
+    stock.splice(waste.length, 1)                //remove element from stock array that was previously at the top of stock (but then was cleared from top of waste)
+    stockEl.classList = `card small ${stock[waste.length]}`
+    if (waste.length === 0) wasteEl.classList = 'card small outline'
+    else wasteEl.classList = `card small ${waste[waste.length - 1]}`
   } else {
     cardTurn = 1
     cardOneEl.classList = 'card small outline'    //if from the pyramid, just remove the card and add an outline
@@ -365,38 +339,32 @@ function checkForWinner(card1, card2) {
 // clearCards() function clears the cards if they add up to 13
 function clearCards() {
   if (cardOneEl.id === 'stock' && cardTwoEl.id !== 'stock' && cardTwoEl.id !== 'waste') { //if card 1 is from the stock deck and card 2 is from the pyramid
-    stockEl.classList.remove('outline')        //remove outline if there is one
-    stockEl.classList.remove(stock[iteration]) //remove old card value that was being displayed at the top of the deck
-    stock.splice(iteration, 1)                 //remove element that was cleared from stock array
-    stockEl.classList.add(stock[iteration])    //add next element in line to be displayed
-    cardTwoEl.classList = 'card small outline' //this clears the card from the pyramid
+    stock.splice(iteration, 1)
+    stockEl.classList = `card small ${stock[iteration]}` 
+    cardTwoEl.classList = 'card small outline'
     console.log("Stock card class list for card1 and card2 from pyramid:", stockEl.classList)
     console.log("Waste card class list for card1 from stock and card2 from pyramid:", wasteEl.classList)
   } else if (cardOneEl.id !== 'stock' && cardOneEl.id !== 'waste' && cardTwoEl.id === 'stock') { //if card 1 is from the pyramid and card 2 is from the stock deck
-    stockEl.classList.remove('outline')
-    stockEl.classList.remove(stock[iteration])
     stock.splice(iteration, 1)
-    stockEl.classList.add(stock[iteration])
+    stockEl.classList = `card small ${stock[iteration]}` 
     cardOneEl.classList = 'card small outline' //same as above, but clears cardOne from the pyramid
     console.log("Stock card class list for card2 and card1 from pyramid:", stockEl.classList)
     console.log("Waste card class list for card2 from stock and card1 from pyramid:", wasteEl.classList)
-  } else if (cardOneEl.id === 'waste' && cardTwoEl.id !== 'stock' && cardTwoEl.id !== 'waste') { //if card 1 is from the waste deck and card 2 is from the pyramid
-    count === 0 ? count = 0 : count--
-    wasteEl.classList.remove(waste[count])         //remove the card cleared from the top of waste deck (one step behind stock array)
-    waste.pop()                                    //remove the card cleared from the waste array
-    if (waste.length === 0)  wasteEl.classList.add('outline') 
-    stock.splice(count, 1)                 //splice the card cleared from the stock array (-1 becasue that's the spot it was previously at)
-    waste.length === 0 ? wasteEl.classList.add('outline') : wasteEl.classList.add(waste[count - 1])        //add new card element to the top of waste that was below previous card
-    cardTwoEl.classList = 'card small outline'     //this clears the card from the pyramid
+  } else if (cardOneEl.id === 'waste' && cardTwoEl.id !== 'stock' && cardTwoEl.id !== 'waste') { //if card 1 is from the waste deck and card 2 is from the pyramid      
+    waste.pop()
+    stock.splice(waste.length, 1)
+    stockEl.classList = `card small ${stock[waste.length]}`
+    if (waste.length === 0) wasteEl.classList = 'card small outline'
+    else wasteEl.classList = `card small ${waste[waste.length - 1]}`
+    cardTwoEl.classList = 'card small outline'
     console.log("Waste card class list for card1 and card2 from pyramid:", wasteEl.classList)
     console.log("Stock card class list for card1 from waste and card2 from pyramid:", stockEl.classList)
   } else if (cardOneEl.id !== 'stock' && cardOneEl.id !== 'waste' && cardTwoEl.id === 'waste') { //if card 1 is from the pyramid and card 2 is from the waste deck
-    waste.length === 0 ? wasteEl.classList.add('outline') : count--
-    wasteEl.classList.remove('outline')
-    wasteEl.classList.remove(waste[count])
     waste.pop()
-    stock.splice(iteration - 1, 1)
-    wasteEl.classList.add(waste[count - 1])
+    stock.splice(waste.length, 1)
+    stockEl.classList = `card small ${stock[waste.length]}`
+    if (waste.length === 0) wasteEl.classList = 'card small outline'
+    else wasteEl.classList = `card small ${waste[waste.length - 1]}`
     cardOneEl.classList = 'card small outline'     //same as above, but clears cardOne from the pyramid
     console.log("Waste card class list for card2 and card1 from pyramid:", wasteEl.classList)
     console.log("Stock card class list for card2 from waste and card1 from pyramid:", stockEl.classList)
@@ -406,12 +374,10 @@ function clearCards() {
     cardOneEl.classList = 'card small outline'
     cardTwoEl.classList = 'card small outline'
   }
-  console.log("Stock array:", stock)
-  console.log("Waste array:", waste)
+  console.log("Stock array clear cards:", stock)
+  console.log("Waste array clear cards:", waste)
   console.log("Current stock value:", stock[iteration])
-  console.log("Current waste value:", waste[count])
   console.log("iteration count:", iteration)
-  console.log("count:", count)
 }
 
 // renders the state of the game through on-screen messages, self-explanatory
@@ -427,4 +393,4 @@ function updateMessage() {
   }
 }
 
-// console.log(stock)
+console.log(stock)
