@@ -1,6 +1,6 @@
 # Christmas Pyramid!
 
-![image of gameplay](./gameplay-screenshot.png)
+![image of gameplay](./assets/gameplay-screenshot.png)
 
 # [Play the game here!](https://pyramid-drewneece.netlify.app/)
 
@@ -22,3 +22,5 @@ Christmas Pyramid is a holiday themed version of the addition-based solitaire ca
 - [x] N/A
 - [ ] N/A
 - [ ] N/A
+
+# [Planning Materials](https://docs.google.com/document/d/17oCG1XT-mQnAYSitut-WIHtTjcctXETAVLNu9Ccx3Mg/edit)
