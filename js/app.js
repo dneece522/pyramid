@@ -74,8 +74,6 @@ wasteEl.addEventListener('click', turn)        // listens to when a waste card i
 // Refreshes the page when the reset game button is clicked
 function refresh() {
   document.location.reload()
-  // init()
-  // pyramidRender()
 }
 
 // invoke init() function
@@ -239,7 +237,6 @@ function handleClick() {
 
 // This is called when user clicks the Reset Stock button
 function stockReset() {
-  stock = waste                                     //set the stock array equal to the waste array 
   waste = []                                        //clear the waste array
   wasteEl.classList = 'card small outline'          //set the waste deck to a card outline
   stockEl.classList = `card small ${stock[0]}`      //add the first card in the stock array to the stock class list
@@ -314,8 +311,16 @@ function isKing() {
     if (waste.length === 0) wasteEl.classList = 'card small outline'
     else wasteEl.classList = `card small ${waste[waste.length - 1]}`
   } else {
-    cardTurn = 1
-    cardOneEl.classList = 'card small outline'    //if from the pyramid, just remove the card and add an outline
+    if (cardOneEl.id === 'p0') {
+      cardOneEl.classList = 'card small outline' 
+      winner === true
+      flipBtn.setAttribute('disabled', '')
+      rstStock.setAttribute('disabled', '')
+      updateMessage() 
+    } else {
+      cardTurn = 1
+      cardOneEl.classList = 'card small outline'    //if from the pyramid, just remove the card and add an outline
+    }
   }
   jingleBells.volume = .25
   jingleBells.play()
