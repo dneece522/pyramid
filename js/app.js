@@ -230,9 +230,6 @@ function handleClick() {
   waste.push(cardPicked)
   // Pass cardPicked to render function to display
   wasteEl.classList = `card small ${cardPicked}`
-
-  console.log("Stock array:", stock)
-  console.log("Waste array:", waste)
 }
 
 // This is called when user clicks the Reset Stock button
@@ -351,14 +348,10 @@ function clearCards() {
     stock.splice(iteration, 1)
     stockEl.classList = `card small ${stock[iteration]}` 
     cardTwoEl.classList = 'card small outline'
-    console.log("Stock card class list for card1 and card2 from pyramid:", stockEl.classList)
-    console.log("Waste card class list for card1 from stock and card2 from pyramid:", wasteEl.classList)
   } else if (cardOneEl.id !== 'stock' && cardOneEl.id !== 'waste' && cardTwoEl.id === 'stock') { //if card 1 is from the pyramid and card 2 is from the stock deck
     stock.splice(iteration, 1)
     stockEl.classList = `card small ${stock[iteration]}` 
     cardOneEl.classList = 'card small outline' //same as above, but clears cardOne from the pyramid
-    console.log("Stock card class list for card2 and card1 from pyramid:", stockEl.classList)
-    console.log("Waste card class list for card2 from stock and card1 from pyramid:", wasteEl.classList)
   } else if (cardOneEl.id === 'waste' && cardTwoEl.id !== 'stock' && cardTwoEl.id !== 'waste') { //if card 1 is from the waste deck and card 2 is from the pyramid      
     waste.pop()
     stock.splice(waste.length, 1)
@@ -366,8 +359,6 @@ function clearCards() {
     if (waste.length === 0) wasteEl.classList = 'card small outline'
     else wasteEl.classList = `card small ${waste[waste.length - 1]}`
     cardTwoEl.classList = 'card small outline'
-    console.log("Waste card class list for card1 and card2 from pyramid:", wasteEl.classList)
-    console.log("Stock card class list for card1 from waste and card2 from pyramid:", stockEl.classList)
   } else if (cardOneEl.id !== 'stock' && cardOneEl.id !== 'waste' && cardTwoEl.id === 'waste') { //if card 1 is from the pyramid and card 2 is from the waste deck
     waste.pop()
     stock.splice(waste.length, 1)
@@ -375,8 +366,6 @@ function clearCards() {
     if (waste.length === 0) wasteEl.classList = 'card small outline'
     else wasteEl.classList = `card small ${waste[waste.length - 1]}`
     cardOneEl.classList = 'card small outline'     //same as above, but clears cardOne from the pyramid
-    console.log("Waste card class list for card2 and card1 from pyramid:", wasteEl.classList)
-    console.log("Stock card class list for card2 from waste and card1 from pyramid:", stockEl.classList)
   } else if ((cardOneEl.id === 'stock' || cardOneEl.id === 'waste') && (cardTwoEl.id === 'stock' || cardTwoEl.id === 'waste')) { //if both cards are from stock or waste deck
     return //tried to make it functional to clear one card from the stock and the other from waste, but wouldn't work. And has no effect in actual gameplay
   } else {  //if both cards are from the pyramid, clear them both
@@ -385,10 +374,6 @@ function clearCards() {
   }
   jingleBells.volume = .25
   jingleBells.play()
-  console.log("Stock array clear cards:", stock)
-  console.log("Waste array clear cards:", waste)
-  console.log("Current stock value:", stock[iteration])
-  console.log("iteration count:", iteration)
 }
 
 // renders the state of the game through on-screen messages, self-explanatory
@@ -403,5 +388,3 @@ function updateMessage() {
     return
   }
 }
-
-console.log(stock)
