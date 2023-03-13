@@ -62,19 +62,20 @@ let cachedCardsArray = [card0El, card1El, card2El, card3El, card4El, card5El, ca
 
 // Event listeners
 
-flipBtn.addEventListener('click', handleClick) // event listener for Flip button
-newGameBtn.addEventListener('click', refresh)  // listens for when the New Game button is clicked
-card.addEventListener('click', coveredCards)   // event listener to call the turn() function, which calls the handleClick functions
-rstStock.addEventListener('click', stockReset) // listens for when the Reset Stock button is clicked
-stockEl.addEventListener('click', turn)        // listens to when a stock card is clicked
-wasteEl.addEventListener('click', turn)        // listens to when a waste card is clicked
+// event listener for Flip button
+flipBtn.addEventListener('click', handleClick)
+// listens for when the New Game button is clicked
+newGameBtn.addEventListener('click', init)
+// event listener to call the coveredCards() function, which calls the handleClick functions
+card.addEventListener('click', coveredCards)
+// listens for when the Reset Stock button is clicked
+rstStock.addEventListener('click', stockReset)
+// listens to when a stock card is clicked
+stockEl.addEventListener('click', turn)
+// listens to when a waste card is clicked
+wasteEl.addEventListener('click', turn)
 
 // Functions
-
-// Refreshes the page when the reset game button is clicked
-function refresh() {
-  document.location.reload()
-}
 
 // invoke init() function
 init()
@@ -82,13 +83,16 @@ init()
 //sets variables to starting state, fills the stock with cards, calls renderPyramid() function
 function init() {
   // setting all of the variable states to start the game
+  pyramid = []
   winner = false
   noMoreMoves = false
   cardTurn = 1
   iteration = 0
   resetCount = 2
-  stockRstCount.textContent = '2' // renders the number of stock resets left for the user
-  rstStock.setAttribute('disabled', '') // disables the Reset Stock button until the user has gone all the way through the stock pile
+  // renders the number of stock resets left for the user
+  stockRstCount.textContent = '2'
+  // disables the Reset Stock button until the user has gone all the way through the stock pile
+  rstStock.setAttribute('disabled', '')
   // Initialize stock with array of 52 cards 
   stock = ["dA","dQ","dK","dJ","d10","d09","d08","d07","d06","d05","d04","d03","d02","hA","hQ","hK","hJ","h10","h09","h08","h07","h06","h05","h04","h03","h02","cA","cQ","cK","cJ","c10","c09","c08","c07","c06","c05","c04","c03","c02","sA","sQ","sK","sJ","s10","s09","s08","s07","s06","s05","s04","s03","s02"]
   // This for loop below shuffles the stock array above (shuffles the deck) when the game initializes (credit to stackoverflow.com)
