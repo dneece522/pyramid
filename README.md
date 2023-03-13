@@ -19,7 +19,7 @@ Christmas Pyramid is a holiday-themed version of the addition-based solitaire ca
 - git
 
 # Ice Box 🧊
-- [ ] Add 'Directions' button that pops up a modal with game instructions and card pairs when clicked.
+- [X] Add 'Directions' button that pops up a modal with game instructions and card pairs when clicked.
 - [ ] Add feature to keep a card highlighted when clicked on.
 - [ ] Add animation of cards falling off the screen when cleared.
 - [ ] Add animation of cards flipping from deck to deck.

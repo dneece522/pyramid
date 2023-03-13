@@ -73,7 +73,33 @@
 		<button id="flip-btn" class="btn">Flip Card</button>
 		<button id="rst-stock" class="btn">Reset Stock</button>
 		<button id="rst-btn" class="btn">New Game</button>
+		<button id="modalBtn" class="btn">Instructions</button>
 	</div>
 	<h3 id="message">Choose Your First Card <span id="starter">To Begin</span></h3>
+
+	<div id="myModal" class="modal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<h3>Instructions:</h3>
+			<p>
+				Christmas Pyramid is a holiday-themed version of the addition-based solitaire card game Pyramid! Using a shuffled array of 52 playing cards, 28 cards are drawn randomly to be aligned in a 7-row pyramid. The remaining 24 cards will be placed face-up in a stockpile.
+			</p>
+			<p>
+				The goal of the game is to clear the pyramid by selecting 2 cards that add up to a total of 13. You can only play a card that isn't covered up by a card underneath it, so you have to clear the pyramid from the bottom up. If no moves are available on the pyramid, you can flip the card from the stock pile to the waste pile until you get a card you can play, and you can play from the top of either deck.
+			</p>
+			<p>
+				The game is won when the entire pyramid is cleared, but if you go through the whole stockpile 3 times without clearing the pyramid, then the game is over. Each card has another card it can match with, except the King, which can be cleared on the first click because it has a value of 13. The suit of the card is not important for this game, and the card pairs and their corresponding numeric values are shown below:
+			</p>
+			<ul>
+				<li>Ace (1) & Queen (12)</li>
+				<li>Two (2) and Jack (11)</li>
+				<li>Three (3) and Ten (10)</li>
+				<li>Four (4) and Nine (9)</li>
+				<li>Five (5) and Eight (8)</li>
+				<li>Six (6) and Seven (7)</li>
+			</ul>
+		</div>
+	</div>
+
 </body>
 </html>

@@ -27,6 +27,9 @@ let rstStock = document.getElementById('rst-stock')        //button used to rese
 let container = document.getElementById('container')       //used to listen if either the stock or waste pile is clicked
 let newGameBtn = document.getElementById('rst-btn')        //button used to reset the game
 let jingleBells = new Audio('../assets/jingle-bells.mp3')  //plays jingle bell sound when cards clear
+let modal = document.getElementById('myModal')
+let modalBtn = document.getElementById('modalBtn')
+let span = document.getElementsByClassName('close')[0]
 
 // Cached Elements for Each Card in the Pyramid
 let card0El = document.getElementById('p0')
@@ -74,6 +77,17 @@ rstStock.addEventListener('click', stockReset)
 stockEl.addEventListener('click', turn)
 // listens to when a waste card is clicked
 wasteEl.addEventListener('click', turn)
+modalBtn.addEventListener('click', () => {
+  modal.style.display = 'block'
+})
+span.addEventListener('click', () => {
+  modal.style.display = 'none'
+})
+window.addEventListener('click', (evt) => {
+  if (evt.target == modal) {
+    modal.style.display = 'none'
+  }
+})
 
 // Functions
 
@@ -118,7 +132,6 @@ function pyramidRender() {
   }
   //displays the first card in the stock array on the stock pile (iteration = 0)
   stockEl.classList = `card small ${stock[iteration]}`
-
   // For loop to add shuffled cards into the Pyramid
   for (let i = 0; i < cachedCardsArray.length; i++) {
     cachedCardsArray[i].classList = `card small ${pyramid[i]}`
